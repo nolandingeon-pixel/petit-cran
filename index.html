@@ -8,36 +8,46 @@
 <style>
 :root{
   --bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a24;--card:#16161f;
-  --accent:#e8ff47;--accent2:#ff6b35;
+  --accent:#e8ff47;--accent2:#ff6b35;--vip:#ffd700;
   --text:#f0f0e8;--muted:#7a7a8a;--border:rgba(255,255,255,0.07);
   --radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);
+  --chat-me:#2a2a3a;--chat-other:#1a1a24;
 }
-[data-theme="light"]{
-  --bg:#f4f4f0;--bg2:#ffffff;--bg3:#ebebе6;--card:#ffffff;
-  --text:#1a1a1a;--muted:#888;--border:rgba(0,0,0,0.08);
-  --shadow:0 4px 24px rgba(0,0,0,.1);
-}
+[data-theme="light"]{--bg:#f4f4f0;--bg2:#fff;--bg3:#ebebeb;--card:#fff;--text:#1a1a1a;--muted:#888;--border:rgba(0,0,0,0.08);--shadow:0 4px 24px rgba(0,0,0,.1);--chat-me:#e8f4ff;--chat-other:#f0f0f0;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
 
-/* ── SCREENS ── */
+/* SCREENS */
 .screen{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.96);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1.5rem;}
 .screen.open{display:flex;}
 
-/* ── LOADING ── */
-.loading-screen{position:fixed;inset:0;z-index:700;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .4s;}
+/* LOADING */
+.loading-screen{position:fixed;inset:0;z-index:700;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
 .logo-big{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent);letter-spacing:4px;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── MAINTENANCE ── */
+/* MAINTENANCE */
 .maintenance-screen{position:fixed;inset:0;z-index:800;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;padding:2rem;}
 .maintenance-screen.active{display:flex;}
-.maintenance-screen .logo-big{font-size:4rem;}
-.maintenance-screen h2{font-size:1.5rem;font-weight:500;}
-.maintenance-screen p{color:var(--muted);max-width:400px;line-height:1.6;}
 
-/* ── CGU ── */
+/* AD */
+.ad-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.95);align-items:center;justify-content:center;flex-direction:column;gap:1rem;}
+.ad-overlay.open{display:flex;}
+.ad-box{position:relative;max-width:700px;width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.ad-box img{width:100%;display:block;cursor:pointer;max-height:400px;object-fit:cover;}
+.ad-timer{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.8);color:#fff;font-size:13px;padding:5px 12px;border-radius:999px;}
+.ad-skip{position:absolute;bottom:12px;right:12px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:none;}
+.ad-skip.visible{display:block;}
+.ad-skip:hover{background:rgba(255,255,255,.25);}
+
+/* VIP */
+.vip-badge{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#0a0a0f;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;display:inline-block;}
+.vip-lock{position:absolute;inset:0;background:rgba(0,0,0,.7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;backdrop-filter:blur(2px);}
+.vip-lock-icon{font-size:2rem;}
+.vip-lock-text{font-size:12px;color:var(--vip);font-weight:500;}
+
+/* CGU */
 .cgu-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:580px;display:flex;flex-direction:column;max-height:88vh;}
 .cgu-header{padding:1.8rem 2rem 1rem;border-bottom:1px solid var(--border);flex-shrink:0;}
 .cgu-header h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--accent);}
@@ -46,16 +56,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cgu-body h3{color:var(--text);font-size:13px;font-weight:500;margin:1rem 0 4px;}
 .cgu-footer{padding:1.2rem 2rem;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn-p{background:var(--accent);color:#0a0a0f;border:none;padding:11px 22px;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;cursor:pointer;transition:opacity .2s;flex:1;text-align:center;}
 .btn-p:hover{opacity:.85;}
 .btn-s{background:transparent;color:var(--muted);border:1px solid var(--border);padding:11px 22px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all .2s;}
 .btn-s:hover{border-color:var(--text);color:var(--text);}
 .btn-full{width:100%;margin-top:6px;}
-.btn-danger{background:transparent;color:#ff6b6b;border:1px solid rgba(255,100,100,.3);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;}
+.btn-danger{background:transparent;color:#ff6b6b;border:1px solid rgba(255,100,100,.3);padding:6px 12px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
 .btn-danger:hover{background:rgba(255,100,100,.1);}
+.btn-nav{background:var(--accent);color:#0a0a0f;border:none;padding:7px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;cursor:pointer;transition:opacity .2s;}
+.btn-nav:hover{opacity:.85;}
 
-/* ── LOGIN ── */
+/* LOGIN */
 .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:380px;padding:2.2rem;}
 .login-box h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--accent);margin-bottom:.3rem;}
 .login-box p{font-size:13px;color:var(--muted);margin-bottom:1.5rem;}
@@ -68,33 +80,42 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .login-err{font-size:12px;color:#ff6b6b;margin-bottom:.8rem;display:none;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
-/* ── NAV ── */
-nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
 [data-theme="light"] nav{background:rgba(244,244,240,.92);}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--accent);cursor:pointer;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--accent);cursor:pointer;flex-shrink:0;}
 .logo span{color:var(--text);}
-.nav-right{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
-.user-badge{font-size:12px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:5px 12px;border-radius:999px;cursor:pointer;}
-.user-badge:hover{border-color:var(--accent);color:var(--accent);}
-.btn-nav{background:var(--accent);color:#0a0a0f;border:none;padding:7px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;cursor:pointer;transition:opacity .2s;}
-.btn-nav:hover{opacity:.85;}
-.btn-icon{background:var(--bg3);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;}
+.nav-center{display:flex;gap:4px;align-items:center;}
+.nav-tab{background:transparent;border:1px solid transparent;color:var(--muted);padding:6px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;position:relative;}
+.nav-tab:hover{color:var(--text);border-color:var(--border);}
+.nav-tab.active{background:var(--bg3);color:var(--text);border-color:var(--border);}
+.nav-tab .notif-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--accent2);border-radius:50%;display:none;}
+.nav-tab .notif-dot.show{display:block;}
+.nav-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.user-badge{font-size:12px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:999px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.user-badge:hover{border-color:var(--accent);}
+.user-badge.vip-user{border-color:rgba(255,215,0,.4);background:rgba(255,215,0,.07);color:var(--vip);}
+.user-avatar-sm{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.btn-icon{background:var(--bg3);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;}
 .btn-icon:hover{border-color:var(--accent);}
-.btn-logout{background:transparent;color:var(--muted);border:1px solid var(--border);padding:7px 12px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;}
+.btn-logout{background:transparent;color:var(--muted);border:1px solid var(--border);padding:6px 10px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
 .btn-logout:hover{border-color:var(--text);color:var(--text);}
 
-/* ── SEARCH BAR ── */
-.search-bar{position:relative;width:220px;}
-.search-bar input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 12px 7px 34px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+/* SEARCH */
+.search-bar{position:relative;width:180px;}
+.search-bar input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px 6px 30px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
 .search-bar input:focus{border-color:var(--accent);}
-.search-bar .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none;}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
 .search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:none;z-index:200;box-shadow:var(--shadow);}
 .search-results.visible{display:block;}
-.search-item{padding:10px 14px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:10px;transition:background .15s;}
+.search-item{padding:9px 12px;cursor:pointer;font-size:13px;display:flex;flex-direction:column;gap:2px;transition:background .15s;}
 .search-item:hover{background:var(--bg3);}
 .search-item-sub{font-size:11px;color:var(--muted);}
 
-/* ── HERO ── */
+/* PAGES */
+.page{display:none;} .page.active{display:block;}
+
+/* HERO */
 .hero{padding:5rem 2rem 3rem;text-align:center;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(232,255,71,.07) 0%,transparent 70%);pointer-events:none;}
 .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:3px;line-height:1;margin-bottom:1rem;}
@@ -104,97 +125,185 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.92);backdrop-fil
 .tag{background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:5px 14px;border-radius:999px;font-size:12px;cursor:pointer;transition:all .2s;}
 .tag:hover,.tag.active{border-color:var(--accent);color:var(--accent);}
 
-/* ── SECTION ── */
+/* VIP BANNER */
+.vip-banner{background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,140,0,.05));border:1px solid rgba(255,215,0,.2);border-radius:12px;padding:1rem 1.5rem;margin:0 2rem 1.5rem;max-width:1300px;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.vip-banner-left{display:flex;align-items:center;gap:12px;}
+.vip-banner h3{font-size:.9rem;font-weight:500;color:var(--vip);}
+.vip-banner p{font-size:11px;color:var(--muted);}
+
+/* SECTION */
 .section{padding:0 2rem 4rem;max-width:1300px;margin:0 auto;}
 .sec-header{display:flex;align-items:center;margin-bottom:1.5rem;}
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--muted);display:flex;align-items:center;gap:12px;flex:1;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── LIB GRID ── */
-.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+/* GRIDS */
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
 .lib-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s;position:relative;}
 .lib-card:hover{transform:translateY(-3px);border-color:rgba(232,255,71,.3);}
+.lib-card.vip-only{border-color:rgba(255,215,0,.25);}
 .lib-cover{aspect-ratio:3/2;background:var(--bg3);overflow:hidden;position:relative;}
 .lib-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
 .lib-card:hover .lib-cover img{transform:scale(1.05);}
 .lib-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--muted);}
 .lib-count{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.75);font-size:11px;color:#fff;padding:3px 8px;border-radius:5px;}
-.lib-scheduled{position:absolute;top:8px;left:8px;background:rgba(232,255,71,.9);color:#0a0a0f;font-size:10px;font-weight:500;padding:3px 8px;border-radius:4px;}
-.lib-body{padding:.9rem 1rem;}
-.lib-name{font-size:.95rem;font-weight:500;margin-bottom:3px;}
-.lib-meta{font-size:12px;color:var(--muted);}
+.lib-vip-badge{position:absolute;top:8px;left:8px;}
+.lib-body{padding:.8rem 1rem;}
+.lib-name{font-size:.9rem;font-weight:500;margin-bottom:3px;}
+.lib-meta{font-size:11px;color:var(--muted);}
 .lib-admin{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .2s;}
 .lib-card:hover .lib-admin{opacity:1;}
 .icon-btn{background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.1);color:#fff;width:28px;height:28px;border-radius:6px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .icon-btn.del:hover{background:#ff4444;border-color:#ff4444;}
 .icon-btn.trailer:hover{background:var(--accent);color:#0a0a0f;border-color:var(--accent);}
-
-/* ── EP GRID ── */
-.ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+.ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s;}
 .card:hover{transform:translateY(-4px);border-color:rgba(232,255,71,.25);}
+.card.vip-only{border-color:rgba(255,215,0,.2);}
 .card-thumb{position:relative;aspect-ratio:16/9;background:var(--bg3);overflow:hidden;}
 .card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
 .card:hover .card-thumb img{transform:scale(1.04);}
 .card-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--muted);}
 .play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
 .card:hover .play-btn{opacity:1;}
-.play-icon{width:52px;height:52px;background:rgba(232,255,71,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.badge-new{position:absolute;top:10px;right:10px;background:var(--accent2);color:white;font-size:10px;font-weight:500;letter-spacing:1px;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
-.badge-scheduled{position:absolute;top:10px;right:10px;background:rgba(232,255,71,.9);color:#0a0a0f;font-size:10px;font-weight:500;padding:3px 8px;border-radius:4px;}
-.ep-num-badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.75);font-size:11px;color:var(--accent);padding:3px 8px;border-radius:5px;font-weight:500;}
-.card-body{padding:1rem 1.1rem 1.1rem;}
-.card-title{font-size:.95rem;font-weight:500;line-height:1.3;margin-bottom:5px;}
+.play-icon{width:50px;height:50px;background:rgba(232,255,71,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.badge-new{position:absolute;top:8px;right:8px;background:var(--accent2);color:white;font-size:10px;font-weight:500;letter-spacing:1px;padding:3px 7px;border-radius:4px;text-transform:uppercase;}
+.ep-num-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.75);font-size:11px;color:var(--accent);padding:3px 7px;border-radius:5px;font-weight:500;}
+.quality-badge{position:absolute;bottom:6px;left:8px;background:rgba(0,0,0,.75);font-size:10px;color:var(--accent);padding:2px 6px;border-radius:4px;font-weight:500;}
+.card-body{padding:.9rem 1rem 1rem;}
+.card-title{font-size:.9rem;font-weight:500;line-height:1.3;margin-bottom:4px;display:flex;align-items:center;gap:5px;}
 .card-desc{font-size:12px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.card-meta{margin-top:8px;display:flex;gap:10px;font-size:11px;color:var(--muted);}
-.card-del{display:inline-flex;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);width:100%;}
-.btn-del{background:transparent;border:1px solid rgba(255,100,100,.3);color:#ff6b6b;padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.card-meta{margin-top:7px;display:flex;gap:8px;font-size:11px;color:var(--muted);}
+.card-del{display:inline-flex;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);width:100%;}
+.btn-del{background:transparent;border:1px solid rgba(255,100,100,.3);color:#ff6b6b;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
 .btn-del:hover{background:rgba(255,100,100,.12);}
 
-/* ── PLAYER ── */
+/* PLAYER */
 .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem;}
 .overlay.open{display:flex;}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:920px;overflow:hidden;animation:popIn .25s ease;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:900px;overflow:hidden;animation:popIn .25s ease;}
 @keyframes popIn{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
 .modal-video{width:100%;aspect-ratio:16/9;background:#000;}
 .modal-video video,.modal-video iframe{width:100%;height:100%;display:block;}
-.modal-info{padding:1.2rem 1.5rem;}
-.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.5rem;}
-.modal-title{font-size:1.15rem;font-weight:500;}
-.close-btn{background:none;border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;flex-shrink:0;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.modal-info{padding:1rem 1.4rem;}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.4rem;}
+.modal-title{font-size:1.1rem;font-weight:500;}
+.close-btn{background:none;border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:50%;cursor:pointer;flex-shrink:0;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .close-btn:hover{border-color:var(--text);color:var(--text);}
-.modal-lib{font-size:12px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem;}
+.modal-lib{font-size:11px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem;}
 .modal-desc{font-size:13px;color:var(--muted);line-height:1.6;}
 
-/* ── ADMIN PANEL ── */
+/* ════════════════════════════
+   CHAT PAGE
+════════════════════════════ */
+.chat-page{display:flex;height:calc(100vh - 64px);overflow:hidden;}
+
+/* SIDEBAR */
+.chat-sidebar{width:280px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg2);}
+.chat-sidebar-header{padding:1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.chat-sidebar-header h3{font-size:14px;font-weight:500;}
+.sidebar-tabs{display:flex;border-bottom:1px solid var(--border);}
+.stab{flex:1;padding:10px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;position:relative;}
+.stab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.stab .nbadge{position:absolute;top:6px;right:8px;background:var(--accent2);color:#fff;font-size:9px;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;}
+.stab .nbadge.show{display:flex;}
+.chat-list{flex:1;overflow-y:auto;}
+.chat-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s;position:relative;}
+.chat-item:hover{background:var(--bg3);}
+.chat-item.active{background:var(--bg3);border-left:3px solid var(--accent);}
+.chat-item-avatar{width:40px;height:40px;border-radius:50%;background:var(--bg3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;position:relative;}
+.chat-item-avatar.online::after{content:'';position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:#4ade80;border-radius:50%;border:2px solid var(--bg2);}
+.chat-item-avatar.group{background:linear-gradient(135deg,var(--bg3),var(--bg));}
+.chat-item-info{flex:1;min-width:0;}
+.chat-item-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chat-item-preview{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.chat-item-unread{background:var(--accent);color:#0a0a0f;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;flex-shrink:0;}
+.new-chat-btn{margin:10px;background:var(--bg3);border:1px dashed var(--border);color:var(--muted);padding:10px;border-radius:8px;font-size:13px;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.new-chat-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* FRIEND REQUESTS */
+.req-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.req-avatar{width:36px;height:36px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.req-info{flex:1;}
+.req-name{font-size:13px;font-weight:500;}
+.req-sub{font-size:11px;color:var(--muted);}
+.req-actions{display:flex;gap:5px;}
+.btn-accept{background:rgba(100,220,100,.15);color:#4ade80;border:1px solid rgba(100,220,100,.3);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-accept:hover{background:rgba(100,220,100,.25);}
+.btn-reject{background:rgba(255,100,100,.1);color:#ff6b6b;border:1px solid rgba(255,100,100,.2);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-reject:hover{background:rgba(255,100,100,.2);}
+
+/* CHAT MAIN */
+.chat-main{flex:1;display:flex;flex-direction:column;min-width:0;}
+.chat-header{padding:.8rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--bg2);flex-shrink:0;}
+.chat-header-avatar{width:38px;height:38px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.chat-header-info{flex:1;}
+.chat-header-name{font-size:14px;font-weight:500;}
+.chat-header-sub{font-size:11px;color:var(--muted);}
+.chat-header-actions{display:flex;gap:6px;}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:8px;}
+.chat-empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;color:var(--muted);}
+.chat-empty-icon{font-size:3rem;opacity:.3;}
+
+/* MESSAGES */
+.msg-group{display:flex;flex-direction:column;gap:2px;}
+.msg-row{display:flex;align-items:flex-end;gap:7px;}
+.msg-row.mine{flex-direction:row-reverse;}
+.msg-avatar{width:28px;height:28px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.msg-bubble{max-width:65%;padding:8px 12px;border-radius:14px;font-size:13px;line-height:1.5;position:relative;word-break:break-word;}
+.msg-bubble.mine{background:var(--accent);color:#0a0a0f;border-bottom-right-radius:4px;}
+.msg-bubble.other{background:var(--chat-other);border:1px solid var(--border);border-bottom-left-radius:4px;}
+.msg-bubble.gif-msg{background:transparent;border:none;padding:0;}
+.msg-bubble.gif-msg img{border-radius:10px;max-width:200px;max-height:160px;display:block;}
+.msg-time{font-size:10px;opacity:.55;margin-top:2px;text-align:right;}
+.msg-sender{font-size:10px;color:var(--accent);margin-bottom:2px;margin-left:35px;}
+.msg-del-btn{opacity:0;background:rgba(255,80,80,.15);border:none;color:#ff6b6b;font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;transition:opacity .2s;margin-left:4px;font-family:'DM Sans',sans-serif;}
+.msg-row:hover .msg-del-btn{opacity:1;}
+
+/* CHAT INPUT */
+.chat-input-area{padding:.8rem 1rem;border-top:1px solid var(--border);background:var(--bg2);flex-shrink:0;}
+.gif-picker{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.8rem;margin-bottom:.6rem;display:none;}
+.gif-picker.open{display:block;}
+.gif-search{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:7px 10px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:.6rem;}
+.gif-search:focus{border-color:var(--accent);}
+.gif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-height:180px;overflow-y:auto;}
+.gif-thumb{border-radius:6px;overflow:hidden;cursor:pointer;aspect-ratio:16/9;background:var(--bg2);}
+.gif-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .2s;}
+.gif-thumb:hover img{transform:scale(1.05);}
+.gif-loading{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:1rem;}
+.chat-input-row{display:flex;gap:7px;align-items:center;}
+.chat-input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;resize:none;}
+.chat-input:focus{border-color:var(--accent);}
+.chat-action-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:36px;height:36px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;flex-shrink:0;}
+.chat-action-btn:hover{border-color:var(--accent);color:var(--accent);}
+.chat-send-btn{background:var(--accent);color:#0a0a0f;border:none;width:36px;height:36px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:opacity .2s;}
+.chat-send-btn:hover{opacity:.85;}
+.chat-no-select{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;color:var(--muted);font-size:14px;}
+.chat-no-select-icon{font-size:4rem;opacity:.2;}
+
+/* ADMIN MODALS */
 .ascreen{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1.5rem;}
 .ascreen.open{display:flex;}
 .abox{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;padding:2rem;max-height:92vh;overflow-y:auto;}
 .abox h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:var(--accent);margin-bottom:1.5rem;}
-.abox-wide{max-width:780px;}
-
-/* ── ADMIN DASHBOARD ── */
-.admin-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
-.atab{background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:7px 16px;border-radius:7px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.abox-wide{max-width:820px;}
+.admin-tabs{display:flex;gap:5px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.atab{background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:7px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
 .atab.active{background:var(--accent);color:#0a0a0f;border-color:var(--accent);font-weight:500;}
-.tab-content{display:none;}
-.tab-content.active{display:block;}
-
-/* ACCOUNTS TABLE */
-.accounts-table{width:100%;border-collapse:collapse;font-size:13px;}
-.accounts-table th{text-align:left;padding:8px 12px;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);}
-.accounts-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.tab-content{display:none;} .tab-content.active{display:block;}
+.accounts-table{width:100%;border-collapse:collapse;font-size:12px;}
+.accounts-table th{text-align:left;padding:7px 8px;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.accounts-table td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .accounts-table tr:last-child td{border-bottom:none;}
-.status-badge{display:inline-flex;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500;}
-.status-active{background:rgba(100,220,100,.15);color:#4ade80;}
-.status-blocked{background:rgba(255,100,100,.15);color:#ff6b6b;}
-.role-admin{background:rgba(232,255,71,.15);color:#e8ff47;}
-.role-viewer{background:rgba(255,255,255,.07);color:var(--muted);}
-
-/* SECURITY PANEL */
-.security-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin-bottom:1rem;}
-.security-card h3{font-size:14px;font-weight:500;margin-bottom:.4rem;}
-.security-card p{font-size:12px;color:var(--muted);margin-bottom:1rem;line-height:1.5;}
+.status-badge{display:inline-flex;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:500;}
+.s-active{background:rgba(100,220,100,.15);color:#4ade80;}
+.s-blocked{background:rgba(255,100,100,.15);color:#ff6b6b;}
+.s-admin{background:rgba(232,255,71,.15);color:#e8ff47;}
+.s-viewer{background:rgba(255,255,255,.07);color:var(--muted);}
+.s-vip{background:rgba(255,215,0,.15);color:var(--vip);}
+.security-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.1rem;margin-bottom:.8rem;}
+.security-card h3{font-size:13px;font-weight:500;margin-bottom:.3rem;}
+.security-card p{font-size:12px;color:var(--muted);margin-bottom:.8rem;line-height:1.5;}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
 .toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
 .toggle input{opacity:0;width:0;height:0;}
@@ -203,138 +312,182 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.92);backdrop-fil
 .toggle input:checked+.toggle-slider{background:var(--accent);}
 .toggle input:checked+.toggle-slider:before{transform:translateX(20px);}
 
-/* ── PROFILE MODAL ── */
-.profile-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:380px;padding:2rem;text-align:center;}
-.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--bg3);border:3px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1rem;cursor:pointer;overflow:hidden;}
-.profile-avatar img{width:100%;height:100%;object-fit:cover;}
-.avatar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:1rem 0;}
+/* PROFILE */
+.profile-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:400px;padding:2rem;text-align:center;}
+.profile-avatar-lg{width:90px;height:90px;border-radius:50%;background:var(--bg3);border:3px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1rem;cursor:pointer;transition:border-color .2s;}
+.profile-avatar-lg:hover{border-color:var(--vip);}
+.avatar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.8rem 0;}
 .avatar-opt{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:1.4rem;cursor:pointer;transition:all .2s;}
 .avatar-opt:hover,.avatar-opt.selected{border-color:var(--accent);}
-.profile-name{font-size:1.1rem;font-weight:500;margin-bottom:.3rem;}
-.profile-role{font-size:12px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;}
+.profile-name-display{font-size:1.1rem;font-weight:500;}
+.profile-role-display{font-size:12px;color:var(--muted);margin:.2rem 0 .8rem;}
+.profile-vip-info{background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.2);border-radius:8px;padding:.7rem;margin:.6rem 0;font-size:12px;color:var(--vip);}
 
-/* ── BACK ── */
-.back-btn{display:inline-flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:1.5rem;}
+/* BACK */
+.back-btn{display:inline-flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:1.2rem;}
 .back-btn:hover{border-color:var(--text);color:var(--text);}
+.empty{grid-column:1/-1;text-align:center;padding:3rem 0;color:var(--muted);}
 
-/* ── EMPTY ── */
-.empty{grid-column:1/-1;text-align:center;padding:4rem 0;color:var(--muted);}
-
-/* ── FOOTER ── */
-footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:12px;color:var(--muted);}
-footer span{color:var(--accent);}
-.footer-links{margin-top:.5rem;display:flex;justify-content:center;gap:1.5rem;}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:11px;cursor:pointer;transition:color .2s;}
-.footer-links a:hover{color:var(--accent);}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:13px;z-index:900;transform:translateY(100px);opacity:0;transition:all .3s;box-shadow:var(--shadow);}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:11px 18px;font-size:13px;z-index:1000;transform:translateY(100px);opacity:0;transition:all .3s;box-shadow:var(--shadow);}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.success{border-color:rgba(100,220,100,.4);color:#4ade80;}
 .toast.error{border-color:rgba(255,100,100,.4);color:#ff6b6b;}
+.toast.vip{border-color:rgba(255,215,0,.4);color:var(--vip);}
 
-@media(max-width:650px){.form-row{grid-template-columns:1fr;}nav{padding:0 1rem;}.section{padding:0 1rem 3rem;}.hero{padding:3rem 1rem 2rem;}.search-bar{width:140px;}.nav-right{gap:.4rem;}}
+footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-size:12px;color:var(--muted);}
+footer span{color:var(--accent);}
+.footer-links{margin-top:.4rem;display:flex;justify-content:center;gap:1.5rem;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:11px;cursor:pointer;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@media(max-width:700px){
+  .chat-sidebar{width:220px;}
+  .form-row{grid-template-columns:1fr;}
+  nav{padding:0 .8rem;}
+  .section{padding:0 1rem 3rem;}
+  .hero{padding:3rem 1rem 2rem;}
+  .nav-center{display:none;}
+  .search-bar{width:110px;}
+}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div class="loading-screen" id="loadingScreen">
-  <div class="logo-big">PetitÉcran</div>
-  <div class="spinner"></div>
-</div>
+<div class="loading-screen" id="loadingScreen"><div class="logo-big">PetitÉcran</div><div class="spinner"></div></div>
 
-<!-- MAINTENANCE -->
 <div class="maintenance-screen" id="maintenanceScreen">
   <div class="logo-big">PetitÉcran</div>
   <h2>Site en maintenance</h2>
-  <p>Le site est temporairement fermé pour maintenance. Revenez bientôt !</p>
-  <div style="margin-top:1rem">
-    <div class="fg" style="text-align:left;max-width:300px">
-      <label>Accès administrateur</label>
-      <input type="password" id="maintPass" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')maintLogin()">
-    </div>
-    <button class="btn-p" onclick="maintLogin()" style="width:300px;margin-top:6px">Connexion admin</button>
+  <p style="color:var(--muted);max-width:380px;line-height:1.6">Revenez bientôt !</p>
+  <div style="margin-top:1rem;width:280px">
+    <div class="fg" style="text-align:left"><label>Accès admin</label><input type="password" id="maintPass" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')maintLogin()"></div>
+    <button class="btn-p btn-full" onclick="maintLogin()">Connexion</button>
   </div>
 </div>
 
-<!-- CGU -->
+<div class="ad-overlay" id="adOverlay">
+  <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem">Publicité — La vidéo commence dans <span id="adCountdown">5</span>s</div>
+  <div class="ad-box" id="adBox">
+    <img id="adImg" src="" alt="Publicité" onclick="adClick()">
+    <div class="ad-timer" id="adTimerBadge">5s</div>
+    <button class="ad-skip" id="adSkipBtn" onclick="skipAd()">Passer la pub ›</button>
+  </div>
+  <div style="font-size:13px;color:var(--text)" id="adTitle"></div>
+</div>
+
 <div class="screen" id="cguScreen">
   <div class="cgu-box">
-    <div class="cgu-header"><h2>Conditions d'utilisation</h2><p>Merci de lire et accepter les conditions avant d'accéder à PetitÉcran</p></div>
+    <div class="cgu-header"><h2>Conditions d'utilisation</h2><p>Merci de lire et accepter avant de continuer</p></div>
     <div class="cgu-body" id="cguContent">
-      <h3>1. Accès au service</h3><p>PetitÉcran est une plateforme privée de diffusion de contenus vidéo. L'accès est réservé aux utilisateurs disposant d'identifiants valides. Tout partage d'identifiant est interdit.</p>
-      <h3>2. Propriété intellectuelle</h3><p>Les vidéos sont la propriété de leurs créateurs. Toute reproduction ou redistribution sans accord est interdite.</p>
-      <h3>3. Usage personnel</h3><p>Le contenu est réservé à un usage personnel et non commercial. Il est interdit de capturer ou partager le contenu diffusé.</p>
-      <h3>4. Comportement</h3><p>Les utilisateurs s'engagent à utiliser la plateforme de manière respectueuse. Tout abus peut entraîner la révocation de l'accès.</p>
-      <h3>5. Données personnelles</h3><p>Aucune donnée personnelle n'est transmise à des tiers. Les connexions sont sécurisées.</p>
-      <h3>6. Disponibilité</h3><p>L'administrateur peut modifier, suspendre ou interrompre le service à tout moment.</p>
-      <h3>7. Modifications</h3><p>Ces conditions peuvent être modifiées à tout moment.</p>
+      <h3>1. Accès au service</h3><p>PetitÉcran est une plateforme privée. L'accès est réservé aux utilisateurs avec identifiants valides. Tout partage est interdit.</p>
+      <h3>2. Propriété intellectuelle</h3><p>Les vidéos appartiennent à leurs créateurs. Toute reproduction sans accord est interdite.</p>
+      <h3>3. Usage personnel</h3><p>Contenu réservé à l'usage personnel. Tout partage ou capture est interdit.</p>
+      <h3>4. Chat & messagerie</h3><p>Les messages envoyés sur PetitÉcran peuvent être modérés par l'administrateur. Tout contenu abusif peut entraîner la suppression du compte.</p>
+      <h3>5. Abonnement VIP</h3><p>Le statut VIP est attribué par l'administrateur et peut être révoqué à tout moment.</p>
+      <h3>6. Publicités</h3><p>Les non-VIP peuvent voir des publicités lors du visionnage.</p>
+      <h3>7. Disponibilité</h3><p>L'administrateur peut modifier ou interrompre le service à tout moment.</p>
     </div>
     <div class="cgu-footer"><button class="btn-s" onclick="rejectCgu()">Refuser</button><button class="btn-p" onclick="acceptCgu()">J'accepte</button></div>
   </div>
 </div>
 
-<!-- LOGIN -->
 <div class="screen" id="loginScreen">
   <div class="login-box">
-    <h2>Connexion</h2>
-    <p>Accès réservé aux membres de PetitÉcran</p>
+    <h2>Connexion</h2><p>Accès réservé aux membres de PetitÉcran</p>
     <div class="fg"><label>Identifiant</label><input type="text" id="lUser" placeholder="Votre identifiant" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="fg"><label>Mot de passe</label><input type="password" id="lPass" placeholder="Votre mot de passe" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="login-err" id="loginErr">Identifiant ou mot de passe incorrect.</div>
-    <div class="login-err" id="loginBlocked" style="display:none">Votre compte est bloqué. Contactez l'administrateur.</div>
-    <div class="login-err" id="loginLimit" style="display:none">Nombre maximum de connexions simultanées atteint.</div>
+    <div class="login-err" id="loginBlocked">Compte bloqué. Contactez l'administrateur.</div>
+    <div class="login-err" id="loginLimit">Nombre max de connexions atteint.</div>
     <button class="btn-p btn-full" onclick="doLogin()">Se connecter</button>
   </div>
 </div>
 
-<!-- PROFILE SCREEN -->
 <div class="screen" id="profileScreen">
   <div class="profile-box">
-    <div class="profile-avatar" id="profileAvatar" onclick="toggleAvatarPicker()">🎬</div>
+    <div class="profile-avatar-lg" id="profileAvatar" onclick="toggleAvatarPicker()">🎬</div>
     <div class="avatar-grid" id="avatarGrid" style="display:none"></div>
+    <div class="profile-name-display" id="profileNameDisplay"></div>
+    <div class="profile-role-display" id="profileRoleDisplay"></div>
+    <div id="profileVipInfo"></div>
     <div class="fg" style="text-align:left;margin-top:.5rem"><label>Votre prénom</label><input type="text" id="profileNameInput" placeholder="Entrez votre prénom"></div>
     <button class="btn-p btn-full" onclick="saveProfile()">Enregistrer</button>
-    <button class="btn-s btn-full" onclick="document.getElementById('profileScreen').classList.remove('open')">Annuler</button>
+    <button class="btn-s btn-full" onclick="document.getElementById('profileScreen').classList.remove('open')">Fermer</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app" style="display:none">
-
 <nav>
-  <div class="logo" onclick="closeLib()">Petit<span>Écran</span></div>
+  <div class="logo" onclick="switchPage('streaming')">Petit<span>Écran</span></div>
+  <div class="nav-center">
+    <button class="nav-tab active" id="tab-streaming" onclick="switchPage('streaming')">🎬 Streaming</button>
+    <button class="nav-tab" id="tab-chat" onclick="switchPage('chat')">💬 Messages <span class="notif-dot" id="chatNotifDot"></span></button>
+  </div>
   <div class="nav-right">
-    <div class="search-bar">
+    <div class="search-bar" id="searchBarContainer">
       <span class="search-icon">🔍</span>
       <input type="text" id="searchInput" placeholder="Rechercher..." oninput="doSearch()" onblur="setTimeout(()=>hideSearch(),200)">
       <div class="search-results" id="searchResults"></div>
     </div>
-    <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="Changer le thème">🌙</button>
-    <span class="user-badge" id="userBadge" onclick="openProfile()"></span>
-    <button class="btn-nav" id="btnAdmin" onclick="openAdminPanel()" style="display:none">⚙️ Admin</button>
+    <button class="btn-icon" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <div class="user-badge" id="userBadge" onclick="openProfile()">
+      <div class="user-avatar-sm" id="navAvatar">🎬</div>
+      <span id="navName"></span>
+    </div>
+    <button class="btn-nav" id="btnAdmin" onclick="openAdminPanel()" style="display:none">⚙️</button>
     <button class="btn-nav" id="btnAddLib" onclick="openAddLib()" style="display:none">+ Série</button>
-    <button class="btn-nav" id="btnAddEp" onclick="openAddEp()" style="display:none">+ Épisode</button>
+    <button class="btn-nav" id="btnAddEp" onclick="openAddEp()" style="display:none">+ Ep.</button>
     <button class="btn-logout" onclick="doLogout()">Déco.</button>
   </div>
 </nav>
 
-<div class="hero" id="heroZone">
-  <h1>Le cinéma<br>des <em>petits</em> créateurs</h1>
-  <p>Des épisodes uniques, faits avec passion. Regardez quand vous voulez, aussi souvent que vous voulez.</p>
-  <div class="tag-list" id="tagList"></div>
+<!-- STREAMING PAGE -->
+<div class="page active" id="page-streaming">
+  <div class="hero" id="heroZone">
+    <h1>Le cinéma<br>des <em>petits</em> créateurs</h1>
+    <p>Des épisodes uniques, faits avec passion.</p>
+    <div class="tag-list" id="tagList"></div>
+  </div>
+  <div class="vip-banner" id="vipBanner" style="display:none">
+    <div class="vip-banner-left"><div style="font-size:1.8rem">⭐</div><div><h3>Passez en VIP</h3><p>Sans pubs + contenus exclusifs. Contactez l'admin.</p></div></div>
+    <span class="vip-badge">VIP</span>
+  </div>
+  <div class="section" id="libView">
+    <div class="sec-header"><div class="sec-title">Bibliothèques</div></div>
+    <div class="lib-grid" id="libGrid"></div>
+  </div>
+  <div class="section" id="epView" style="display:none">
+    <button class="back-btn" onclick="closeLib()">← Retour</button>
+    <div class="sec-header"><div class="sec-title" id="epViewTitle">Épisodes</div></div>
+    <div class="ep-grid" id="epGrid"></div>
+  </div>
 </div>
 
-<div class="section" id="libView">
-  <div class="sec-header"><div class="sec-title">Bibliothèques</div></div>
-  <div class="lib-grid" id="libGrid"></div>
-</div>
-
-<div class="section" id="epView" style="display:none">
-  <button class="back-btn" onclick="closeLib()">← Retour</button>
-  <div class="sec-header"><div class="sec-title" id="epViewTitle">Épisodes</div></div>
-  <div class="ep-grid" id="epGrid"></div>
+<!-- CHAT PAGE -->
+<div class="page" id="page-chat">
+  <div class="chat-page">
+    <div class="chat-sidebar">
+      <div class="chat-sidebar-header">
+        <h3>Messages</h3>
+        <button class="btn-nav" style="font-size:11px;padding:5px 10px" onclick="openNewChat()">+ Nouveau</button>
+      </div>
+      <div class="sidebar-tabs">
+        <div class="stab active" onclick="switchSideTab('convs',this)">Conversations</div>
+        <div class="stab" onclick="switchSideTab('reqs',this)">Demandes <span class="nbadge" id="reqBadge"></span></div>
+      </div>
+      <div class="chat-list" id="convList"></div>
+      <div class="chat-list" id="reqList" style="display:none"></div>
+    </div>
+    <div class="chat-main" id="chatMain">
+      <div class="chat-no-select">
+        <div class="chat-no-select-icon">💬</div>
+        <div>Sélectionne une conversation</div>
+        <button class="btn-nav" onclick="openNewChat()">+ Nouvelle conversation</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- PLAYER -->
@@ -342,12 +495,50 @@ footer span{color:var(--accent);}
   <div class="modal">
     <div class="modal-video" id="modalVideo"></div>
     <div class="modal-info">
-      <div class="modal-header">
-        <div><div class="modal-lib" id="modalLib"></div><div class="modal-title" id="modalTitle"></div></div>
-        <button class="close-btn" onclick="closePlayer()">✕</button>
-      </div>
+      <div class="modal-header"><div><div class="modal-lib" id="modalLib"></div><div class="modal-title" id="modalTitle"></div></div><button class="close-btn" onclick="closePlayer()">✕</button></div>
       <div class="modal-desc" id="modalDesc"></div>
     </div>
+  </div>
+</div>
+
+<!-- TRAILER -->
+<div class="overlay" id="trailerOverlay" onclick="if(event.target===this)closeTrailer()">
+  <div class="modal"><div class="modal-video" id="trailerVideo"></div><div class="modal-info"><div class="modal-header"><div><div class="modal-lib">Bande annonce</div><div class="modal-title" id="trailerTitle"></div></div><button class="close-btn" onclick="closeTrailer()">✕</button></div></div></div>
+</div>
+
+<!-- NEW CHAT MODAL -->
+<div class="ascreen" id="newChatScreen" onclick="if(event.target===this)closeNewChat()">
+  <div class="abox">
+    <h2>Nouvelle conversation</h2>
+    <div style="display:flex;gap:8px;margin-bottom:1rem">
+      <button class="atab active" id="ncDmTab" onclick="switchNewChatTab('dm',this)">Message privé</button>
+      <button class="atab" id="ncGrpTab" onclick="switchNewChatTab('group',this)">Créer un groupe</button>
+    </div>
+    <div id="ncDmPanel">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Envoie une demande d'ami pour commencer à discuter.</p>
+      <div class="fg"><label>Chercher un utilisateur</label><input type="text" id="dmSearch" placeholder="Identifiant ou prénom..." oninput="searchUsers()"></div>
+      <div id="userSearchResults"></div>
+    </div>
+    <div id="ncGrpPanel" style="display:none">
+      <div class="fg"><label>Nom du groupe *</label><input type="text" id="grpName" placeholder="Nom du groupe"></div>
+      <div class="fg"><label>Ajouter des membres</label><input type="text" id="grpSearch" placeholder="Chercher..." oninput="searchGroupUsers()"></div>
+      <div id="grpSearchResults" style="margin-bottom:.8rem"></div>
+      <div id="grpSelectedMembers" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem"></div>
+      <button class="btn-p btn-full" onclick="createGroup()">Créer le groupe</button>
+    </div>
+    <button class="btn-s btn-full" onclick="closeNewChat()">Annuler</button>
+  </div>
+</div>
+
+<!-- GROUP SETTINGS -->
+<div class="ascreen" id="grpSettingsScreen" onclick="if(event.target===this)closeGrpSettings()">
+  <div class="abox">
+    <h2 id="grpSettingsTitle">Paramètres du groupe</h2>
+    <div id="grpMembersList"></div>
+    <div class="fg" style="margin-top:1rem"><label>Ajouter un membre</label><input type="text" id="grpAddSearch" placeholder="Chercher..." oninput="searchAddMember()"></div>
+    <div id="grpAddResults"></div>
+    <button class="btn-danger btn-full" style="margin-top:1rem" onclick="leaveOrDeleteGroup()">Quitter / Supprimer le groupe</button>
+    <button class="btn-s btn-full" onclick="closeGrpSettings()">Fermer</button>
   </div>
 </div>
 
@@ -357,70 +548,63 @@ footer span{color:var(--accent);}
     <h2>Panneau administrateur</h2>
     <div class="admin-tabs">
       <button class="atab active" onclick="switchTab('tabAccounts',this)">👥 Comptes</button>
+      <button class="atab" onclick="switchTab('tabVip',this)">⭐ VIP</button>
+      <button class="atab" onclick="switchTab('tabAds',this)">📢 Pubs</button>
+      <button class="atab" onclick="switchTab('tabChats',this)">💬 Conversations</button>
       <button class="atab" onclick="switchTab('tabSecurity',this)">🔒 Sécurité</button>
       <button class="atab" onclick="switchTab('tabSchedule',this)">📅 Programmer</button>
     </div>
-
-    <!-- ACCOUNTS TAB -->
     <div class="tab-content active" id="tabAccounts">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-        <div style="font-size:13px;color:var(--muted)">Gérez les accès à PetitÉcran</div>
-        <button class="btn-nav" onclick="openCreateAccount()">+ Créer un compte</button>
-      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><div style="font-size:13px;color:var(--muted)">Gérez les accès</div><button class="btn-nav" onclick="openCreateAccount()">+ Créer</button></div>
       <table class="accounts-table" id="accountsTable"></table>
     </div>
-
-    <!-- SECURITY TAB -->
+    <div class="tab-content" id="tabVip">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Les VIP n'ont pas de pub et accèdent aux contenus exclusifs.</p>
+      <table class="accounts-table" id="vipTable"></table>
+    </div>
+    <div class="tab-content" id="tabAds">
+      <div class="security-card">
+        <h3>📢 Activer les publicités</h3><p>Si désactivé, personne ne voit de pub.</p>
+        <div class="toggle-row"><span style="font-size:13px" id="adsLabel">Pubs désactivées</span><label class="toggle"><input type="checkbox" id="adsToggle" onchange="toggleAds()"><span class="toggle-slider"></span></label></div>
+      </div>
+      <div class="security-card">
+        <h3>🖼️ Publicité</h3>
+        <div class="fg"><label>URL de l'image</label><input type="text" id="adImageUrl" placeholder="https://..."></div>
+        <div class="fg"><label>Lien de destination</label><input type="text" id="adLinkUrl" placeholder="https://..."></div>
+        <div class="fg"><label>Texte sous la pub</label><input type="text" id="adText" placeholder="Sponsorisé par..."></div>
+        <button class="btn-p" style="width:100%" onclick="saveAdSettings()">Sauvegarder</button>
+      </div>
+    </div>
+    <div class="tab-content" id="tabChats">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Surveillez toutes les conversations. Vous pouvez supprimer des messages et expulser des membres de groupe.</p>
+      <div id="adminChatList"></div>
+    </div>
     <div class="tab-content" id="tabSecurity">
       <div class="security-card">
-        <h3>🔴 Fermeture du site</h3>
-        <p>Met le site en mode maintenance. Seul l'admin peut se connecter. Tous les autres utilisateurs voient une page d'indisponibilité.</p>
-        <div class="toggle-row">
-          <span style="font-size:13px" id="maintenanceLabel">Site ouvert</span>
-          <label class="toggle"><input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"><span class="toggle-slider"></span></label>
-        </div>
+        <h3>🔴 Fermeture du site</h3><p>Seul l'admin peut se connecter.</p>
+        <div class="toggle-row"><span style="font-size:13px" id="maintenanceLabel">Site ouvert</span><label class="toggle"><input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"><span class="toggle-slider"></span></label></div>
       </div>
       <div class="security-card">
-        <h3>⚠️ Bloquer un utilisateur</h3>
-        <p>Empêche un utilisateur spécifique de se connecter. Gérez les comptes dans l'onglet Comptes.</p>
-        <div style="font-size:13px;color:var(--muted)">Utilisez les boutons Bloquer/Débloquer dans l'onglet Comptes.</div>
-      </div>
-      <div class="security-card">
-        <h3>🔢 Connexions simultanées</h3>
-        <p>Limite le nombre de personnes connectées en même temps sur le site.</p>
+        <h3>🔢 Connexions simultanées</h3><p>Limite le nombre de personnes connectées.</p>
         <div class="toggle-row">
           <label class="toggle"><input type="checkbox" id="limitToggle" onchange="toggleLimit()"><span class="toggle-slider"></span></label>
           <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-end">
             <span style="font-size:13px;color:var(--muted)">Max :</span>
-            <input type="number" id="maxConn" value="5" min="1" max="50" style="width:70px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:6px 10px;font-size:13px;outline:none;" onchange="saveLimit()">
-            <span style="font-size:13px;color:var(--muted)">connexions</span>
+            <input type="number" id="maxConn" value="5" min="1" max="50" style="width:65px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:5px 8px;font-size:13px;outline:none;" onchange="saveLimit()">
           </div>
         </div>
       </div>
     </div>
-
-    <!-- SCHEDULE TAB -->
     <div class="tab-content" id="tabSchedule">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Programmez la publication d'un épisode à une date et heure précises.</p>
-      <div class="fg"><label>Bibliothèque *</label><select id="schedLib" onchange="loadSchedEps()"></select></div>
-      <div class="form-row">
-        <div class="fg"><label>Titre de l'épisode *</label><input type="text" id="schedTitle" placeholder="Titre"></div>
-        <div class="fg"><label>Numéro</label><input type="text" id="schedNum" placeholder="01"></div>
-      </div>
-      <div class="fg"><label>Description</label><textarea id="schedDesc" placeholder="Description..."></textarea></div>
+      <div class="fg"><label>Bibliothèque *</label><select id="schedLib"></select></div>
+      <div class="form-row"><div class="fg"><label>Titre *</label><input type="text" id="schedTitle" placeholder="Titre"></div><div class="fg"><label>Numéro</label><input type="text" id="schedNum" placeholder="01"></div></div>
       <div class="fg"><label>URL vidéo *</label><input type="text" id="schedVideo" placeholder="https://archive.org/download/..."></div>
-      <div class="fg"><label>Miniature (URL)</label><input type="text" id="schedImage" placeholder="https://..."></div>
-      <div class="form-row">
-        <div class="fg"><label>Date de publication *</label><input type="datetime-local" id="schedDate"></div>
-        <div class="fg"><label>Durée</label><input type="text" id="schedDur" placeholder="23:45"></div>
-      </div>
-      <button class="btn-p btn-full" onclick="saveScheduled()">Programmer la publication</button>
-      <div style="margin-top:1.5rem">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:.8rem;letter-spacing:1px;text-transform:uppercase">Épisodes programmés</div>
-        <div id="scheduledList"></div>
-      </div>
+      <div class="fg"><label>Miniature</label><input type="text" id="schedImage" placeholder="https://..."></div>
+      <div class="form-row"><div class="fg"><label>Date et heure *</label><input type="datetime-local" id="schedDate"></div><div class="fg"><label>Durée</label><input type="text" id="schedDur" placeholder="23:45"></div></div>
+      <div class="fg"><label><input type="checkbox" id="schedVip" style="width:auto;margin-right:6px">VIP exclusif</label></div>
+      <button class="btn-p btn-full" onclick="saveScheduled()">Programmer</button>
+      <div style="margin-top:1.2rem"><div style="font-size:11px;color:var(--muted);margin-bottom:.6rem;letter-spacing:1px;text-transform:uppercase">Programmés</div><div id="scheduledList"></div></div>
     </div>
-
     <button class="btn-s btn-full" style="margin-top:1rem" onclick="closeAdminPanel()">Fermer</button>
   </div>
 </div>
@@ -431,11 +615,10 @@ footer span{color:var(--accent);}
     <h2>Créer un compte</h2>
     <div class="fg"><label>Identifiant *</label><input type="text" id="newUser" placeholder="identifiant"></div>
     <div class="fg"><label>Mot de passe *</label><input type="password" id="newPass" placeholder="mot de passe"></div>
-    <div class="fg"><label>Rôle</label>
-      <select id="newRole"><option value="viewer">Spectateur</option><option value="admin">Administrateur</option></select>
-    </div>
-    <div class="fg"><label>Prénom affiché</label><input type="text" id="newName" placeholder="Prénom"></div>
-    <button class="btn-p btn-full" onclick="createAccount()">Créer le compte</button>
+    <div class="fg"><label>Rôle</label><select id="newRole"><option value="viewer">Spectateur</option><option value="admin">Admin</option></select></div>
+    <div class="fg"><label>Prénom</label><input type="text" id="newName" placeholder="Prénom"></div>
+    <div class="fg"><label><input type="checkbox" id="newVip" style="width:auto;margin-right:6px">Compte VIP</label></div>
+    <button class="btn-p btn-full" onclick="createAccount()">Créer</button>
     <button class="btn-s btn-full" onclick="closeCreateAccount()">Annuler</button>
   </div>
 </div>
@@ -444,12 +627,13 @@ footer span{color:var(--accent);}
 <div class="ascreen" id="addLibScreen" onclick="if(event.target===this)closeAddLib()">
   <div class="abox">
     <h2>Nouvelle bibliothèque</h2>
-    <div class="fg"><label>Nom *</label><input type="text" id="lName" placeholder="Ex: One Piece, Mon Vlog..."></div>
+    <div class="fg"><label>Nom *</label><input type="text" id="lName" placeholder="Ex: One Piece..."></div>
     <div class="fg"><label>Créateur</label><input type="text" id="lCreator" placeholder="Nom du créateur"></div>
     <div class="fg"><label>Description</label><textarea id="lDesc" placeholder="De quoi parle cette série ?"></textarea></div>
-    <div class="fg"><label>Image de couverture (URL)</label><input type="text" id="lImage" placeholder="https://..."></div>
-    <div class="fg"><label>Bande annonce (URL vidéo)</label><input type="text" id="lTrailer" placeholder="https://archive.org/... ou YouTube"></div>
-    <div class="fg"><label>Catégorie</label><input type="text" id="lCategory" placeholder="Anime, Vlog, Court-métrage..."></div>
+    <div class="fg"><label>Image de couverture</label><input type="text" id="lImage" placeholder="https://..."></div>
+    <div class="fg"><label>Bande annonce (URL)</label><input type="text" id="lTrailer" placeholder="https://..."></div>
+    <div class="fg"><label>Catégorie</label><input type="text" id="lCategory" placeholder="Anime, Vlog..."></div>
+    <div class="fg"><label><input type="checkbox" id="lVip" style="width:auto;margin-right:6px">VIP exclusif ⭐</label></div>
     <button class="btn-p btn-full" onclick="saveLib()">Créer</button>
     <button class="btn-s btn-full" onclick="closeAddLib()">Annuler</button>
   </div>
@@ -460,517 +644,718 @@ footer span{color:var(--accent);}
   <div class="abox">
     <h2>Nouvel épisode</h2>
     <div class="fg"><label>Bibliothèque *</label><select id="epLib"></select></div>
-    <div class="form-row">
-      <div class="fg"><label>Titre *</label><input type="text" id="epTitle" placeholder="Titre de l'épisode"></div>
-      <div class="fg"><label>Numéro</label><input type="text" id="epNum" placeholder="01"></div>
-    </div>
-    <div class="fg"><label>Description</label><textarea id="epDesc" placeholder="De quoi parle cet épisode ?"></textarea></div>
-    <div class="fg"><label>Type</label>
-      <select id="epVtype" onchange="updateVfields()">
-        <option value="file">Lien direct (archive.org, MP4…)</option>
-        <option value="youtube">YouTube</option>
-      </select>
-    </div>
+    <div class="form-row"><div class="fg"><label>Titre *</label><input type="text" id="epTitle" placeholder="Titre"></div><div class="fg"><label>Numéro</label><input type="text" id="epNum" placeholder="01"></div></div>
+    <div class="fg"><label>Description</label><textarea id="epDesc" placeholder="Description..."></textarea></div>
+    <div class="fg"><label>Type</label><select id="epVtype" onchange="updateVfields()"><option value="file">Lien direct</option><option value="youtube">YouTube</option></select></div>
     <div class="fg"><label id="epVlabel">URL de la vidéo *</label><input type="text" id="epVideo" placeholder="https://archive.org/download/..."></div>
-    <div class="fg"><label>Miniature (URL)</label><input type="text" id="epImage" placeholder="https://..."></div>
-    <div class="fg"><label>Sous-titres (URL fichier .vtt)</label><input type="text" id="epSubs" placeholder="https://.../soustitres.vtt (optionnel)"></div>
-    <div class="fg"><label>Badge qualité</label>
-      <select id="epQuality"><option value="">Aucun</option><option value="4K">4K</option><option value="1080p">1080p</option><option value="720p">720p</option></select>
-    </div>
-    <div class="form-row">
-      <div class="fg"><label>Durée</label><input type="text" id="epDur" placeholder="23:45"></div>
-      <div class="fg"><label>Date</label><input type="date" id="epDate"></div>
-    </div>
+    <div class="fg"><label>Miniature</label><input type="text" id="epImage" placeholder="https://..."></div>
+    <div class="fg"><label>Sous-titres (.vtt)</label><input type="text" id="epSubs" placeholder="https://.../subs.vtt"></div>
+    <div class="fg"><label>Badge qualité</label><select id="epQuality"><option value="">Aucun</option><option value="4K">4K</option><option value="1080p">1080p</option><option value="720p">720p</option></select></div>
+    <div class="form-row"><div class="fg"><label>Durée</label><input type="text" id="epDur" placeholder="23:45"></div><div class="fg"><label>Date</label><input type="date" id="epDate"></div></div>
+    <div class="fg"><label><input type="checkbox" id="epVip" style="width:auto;margin-right:6px">VIP exclusif ⭐</label></div>
     <button class="btn-p btn-full" onclick="saveEp()">Publier</button>
     <button class="btn-s btn-full" onclick="closeAddEp()">Annuler</button>
   </div>
 </div>
 
-<!-- TRAILER PLAYER -->
-<div class="overlay" id="trailerOverlay" onclick="if(event.target===this)closeTrailer()">
-  <div class="modal">
-    <div class="modal-video" id="trailerVideo"></div>
-    <div class="modal-info">
-      <div class="modal-header">
-        <div><div class="modal-lib">Bande annonce</div><div class="modal-title" id="trailerTitle"></div></div>
-        <button class="close-btn" onclick="closeTrailer()">✕</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <span>PetitÉcran</span> — Fait avec passion pour les créateurs indépendants
-  <div class="footer-links">
-    <a onclick="showCguView()">Conditions d'utilisation</a>
-    <a onclick="doLogout()">Se déconnecter</a>
-  </div>
-</footer>
-</div><!-- /app -->
-
-<!-- CGU VIEW -->
 <div class="screen" id="cguViewScreen">
   <div class="cgu-box"><div class="cgu-header"><h2>Conditions d'utilisation</h2></div><div class="cgu-body" id="cguViewContent"></div><div class="cgu-footer"><button class="btn-p" onclick="document.getElementById('cguViewScreen').classList.remove('open')">Fermer</button></div></div>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
+
+<footer id="mainFooter">
+  <span>PetitÉcran</span> — Fait avec passion pour les créateurs indépendants
+  <div class="footer-links"><a onclick="showCguView()">CGU</a><a onclick="doLogout()">Se déconnecter</a></div>
+</footer>
+</div><!-- /app -->
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, getDoc, query, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore,collection,addDoc,getDocs,deleteDoc,doc,setDoc,getDoc,query,orderBy,updateDoc,onSnapshot,where,serverTimestamp,Timestamp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyChU-uLHzYEeWuACkC8M0xLvqxkKEAUcmU",
-  authDomain: "petitecran-df760.firebaseapp.com",
-  projectId: "petitecran-df760",
-  storageBucket: "petitecran-df760.firebasestorage.app",
-  messagingSenderId: "655448225349",
-  appId: "1:655448225349:web:e645f4f15ce0eb80d2152c"
-};
+const fb={apiKey:"AIzaSyChU-uLHzYEeWuACkC8M0xLvqxkKEAUcmU",authDomain:"petitecran-df760.firebaseapp.com",projectId:"petitecran-df760",storageBucket:"petitecran-df760.firebasestorage.app",messagingSenderId:"655448225349",appId:"1:655448225349:web:e645f4f15ce0eb80d2152c"};
+const app=initializeApp(fb);
+const db=getFirestore(app);
+const GIPHY_KEY='SjBFRQVNjKHuTBMobMSJPFVODYerQPEL'; // free public key
 
-const fireApp = initializeApp(firebaseConfig);
-const db = getFirestore(fireApp);
+/* STATE */
+let cu=null,cr=null,cvip=false,curLib=null,afilter=null;
+let libs=[],eps=[],accounts=[],settings={},scheduled=[];
+let selAvatar='🎬',adTimer=null,pendingEp=null;
+const seenAds=new Set();
+const AVATARS=['🎬','🎭','🎨','🎵','🎮','🚀','🦊','🐉','⭐','🌟','😎','🦁','🐺','🎯','💎'];
 
-/* ── STATE ── */
-let currentUser=null, currentRole=null, currentLibId=null, activeFilter=null;
-let libs=[], eps=[], accounts=[], settings={}, scheduled=[];
-let selectedAvatar='🎬';
-const AVATARS=['🎬','🎭','🎨','🎵','🎮','🚀','🦊','🐉','⚡','🌟'];
+// CHAT STATE
+let currentConvId=null,currentConvData=null,msgUnsub=null,convUnsub=null;
+let grpSelectedMembers=[];
 
-/* ── BOOT ── */
-async function boot() {
+/* BOOT */
+async function boot(){
   await loadAll();
   document.getElementById('loadingScreen').style.display='none';
-
-  // Check maintenance
-  if(settings.maintenance) {
-    document.getElementById('maintenanceScreen').classList.add('active');
-    return;
-  }
-
-  const s = sessionStorage.getItem('pe_s');
-  if(s){ const d=JSON.parse(s); if(d.cgu) await loginAs(d.u,d.r,true); else showCgu(); }
+  if(settings.maintenance){document.getElementById('maintenanceScreen').classList.add('active');return;}
+  const s=sessionStorage.getItem('pe_s');
+  if(s){const d=JSON.parse(s);if(d.cgu)await loginAs(d.u,d.r,true);else showCgu();}
   else showCgu();
-
-  // Check scheduled episodes every minute
-  setInterval(checkScheduled, 60000);
-  checkScheduled();
+  setInterval(checkScheduled,60000);checkScheduled();
 }
 
-async function loadAll() {
-  try {
-    const [libSnap, epSnap, accSnap, settSnap, schedSnap] = await Promise.all([
-      getDocs(query(collection(db,'libs'), orderBy('createdAt','asc'))),
-      getDocs(query(collection(db,'eps'),  orderBy('createdAt','asc'))),
+async function loadAll(){
+  try{
+    const[libS,epS,accS,setS,schS]=await Promise.all([
+      getDocs(query(collection(db,'libs'),orderBy('createdAt','asc'))),
+      getDocs(query(collection(db,'eps'),orderBy('createdAt','asc'))),
       getDocs(collection(db,'accounts')),
       getDoc(doc(db,'settings','main')),
       getDocs(collection(db,'scheduled'))
     ]);
-    libs     = libSnap.docs.map(d=>({id:d.id,...d.data()}));
-    eps      = epSnap.docs.map(d=>({id:d.id,...d.data()}));
-    accounts = accSnap.docs.map(d=>({id:d.id,...d.data()}));
-    settings = settSnap.exists() ? settSnap.data() : {};
-    scheduled= schedSnap.docs.map(d=>({id:d.id,...d.data()}));
-
-    // Init default accounts if none
-    if(accounts.length===0) {
-      await setDoc(doc(db,'accounts','lapomme'),{pass:'2503',role:'admin',name:'Admin',avatar:'👑',blocked:false,createdAt:Date.now()});
-      await setDoc(doc(db,'accounts','aze'),{pass:'1234',role:'viewer',name:'Aze',avatar:'🎬',blocked:false,createdAt:Date.now()});
-      const [a1,a2] = await Promise.all([getDoc(doc(db,'accounts','lapomme')),getDoc(doc(db,'accounts','aze'))]);
+    libs=libS.docs.map(d=>({id:d.id,...d.data()}));
+    eps=epS.docs.map(d=>({id:d.id,...d.data()}));
+    accounts=accS.docs.map(d=>({id:d.id,...d.data()}));
+    settings=setS.exists()?setS.data():{};
+    scheduled=schS.docs.map(d=>({id:d.id,...d.data()}));
+    if(!accounts.length){
+      await setDoc(doc(db,'accounts','lapomme'),{pass:'2503',role:'admin',name:'Admin',avatar:'👑',blocked:false,vip:true,createdAt:Date.now()});
+      await setDoc(doc(db,'accounts','aze'),{pass:'1234',role:'viewer',name:'Aze',avatar:'🎬',blocked:false,vip:false,createdAt:Date.now()});
+      const[a1,a2]=await Promise.all([getDoc(doc(db,'accounts','lapomme')),getDoc(doc(db,'accounts','aze'))]);
       accounts=[{id:'lapomme',...a1.data()},{id:'aze',...a2.data()}];
     }
-  } catch(e){ console.error(e); }
+  }catch(e){console.error(e);}
 }
 
-/* ── MAINTENANCE ── */
-window.maintLogin = async()=>{
+/* MAINTENANCE */
+window.maintLogin=async()=>{
   const p=document.getElementById('maintPass').value;
-  const adminAcc=accounts.find(a=>a.role==='admin'&&a.pass===p);
-  if(!adminAcc){ showToast('Mot de passe incorrect','error'); return; }
+  const a=accounts.find(a=>a.role==='admin'&&a.pass===p);
+  if(!a){showToast('Mot de passe incorrect','error');return;}
   document.getElementById('maintenanceScreen').classList.remove('active');
   document.getElementById('loginScreen').classList.add('open');
 };
 
-/* ── CGU ── */
+/* CGU */
 window.showCgu=()=>document.getElementById('cguScreen').classList.add('open');
-window.acceptCgu=()=>{ document.getElementById('cguScreen').classList.remove('open'); document.getElementById('loginScreen').classList.add('open'); };
-window.rejectCgu=()=>{ document.getElementById('cguScreen').classList.remove('open'); document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#7a7a8a;background:#0a0a0f;flex-direction:column;gap:1rem"><div style="font-family:serif;font-size:3rem;color:#e8ff47">PetitÉcran</div><p>Vous avez refusé les conditions d\'utilisation.</p></div>'; };
-window.showCguView=()=>{ document.getElementById('cguViewContent').innerHTML=document.getElementById('cguContent').innerHTML; document.getElementById('cguViewScreen').classList.add('open'); };
+window.acceptCgu=()=>{document.getElementById('cguScreen').classList.remove('open');document.getElementById('loginScreen').classList.add('open');};
+window.rejectCgu=()=>{document.getElementById('cguScreen').classList.remove('open');document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0f;color:#7a7a8a;flex-direction:column;gap:1rem"><div style="font-size:3rem;color:#e8ff47">PetitÉcran</div><p>Vous avez refusé les conditions.</p></div>';};
+window.showCguView=()=>{document.getElementById('cguViewContent').innerHTML=document.getElementById('cguContent').innerHTML;document.getElementById('cguViewScreen').classList.add('open');};
 
-/* ── LOGIN ── */
+/* LOGIN */
 window.doLogin=async()=>{
   const u=document.getElementById('lUser').value.trim();
   const p=document.getElementById('lPass').value;
   ['loginErr','loginBlocked','loginLimit'].forEach(id=>document.getElementById(id).style.display='none');
-
   const acc=accounts.find(a=>a.id===u&&a.pass===p);
-  if(!acc){ document.getElementById('loginErr').style.display='block'; document.getElementById('lPass').value=''; return; }
-  if(acc.blocked){ document.getElementById('loginBlocked').style.display='block'; return; }
-
-  // Check connection limit
-  if(settings.limitEnabled && acc.role!=='admin') {
-    const sessions=JSON.parse(localStorage.getItem('pe_sessions')||'[]').filter(s=>Date.now()-s.time<3600000);
-    if(sessions.length>=( settings.maxConn||5)){ document.getElementById('loginLimit').style.display='block'; return; }
-    sessions.push({user:u,time:Date.now()});
-    localStorage.setItem('pe_sessions',JSON.stringify(sessions));
+  if(!acc){document.getElementById('loginErr').style.display='block';document.getElementById('lPass').value='';return;}
+  if(acc.blocked){document.getElementById('loginBlocked').style.display='block';return;}
+  if(settings.limitEnabled&&acc.role!=='admin'){
+    const sess=JSON.parse(localStorage.getItem('pe_sessions')||'[]').filter(s=>Date.now()-s.time<3600000);
+    if(sess.length>=(settings.maxConn||5)){document.getElementById('loginLimit').style.display='block';return;}
+    sess.push({user:u,time:Date.now()});localStorage.setItem('pe_sessions',JSON.stringify(sess));
   }
-
   document.getElementById('loginScreen').classList.remove('open');
   sessionStorage.setItem('pe_s',JSON.stringify({u,r:acc.role,cgu:true}));
   await loginAs(u,acc.role,false);
 };
 
-async function loginAs(u,role,fromSession){
-  currentUser=u; currentRole=role;
+async function loginAs(u,role,fromSess){
+  cu=u;cr=role;
   const acc=accounts.find(a=>a.id===u)||{};
-  selectedAvatar=acc.avatar||'🎬';
+  cvip=acc.vip||role==='admin';
+  selAvatar=acc.avatar||'🎬';
   document.getElementById('app').style.display='block';
-  const displayName=acc.name||u;
-  document.getElementById('userBadge').textContent=(acc.avatar||'🎬')+' '+displayName;
+  const nm=acc.name||u;
+  document.getElementById('navAvatar').textContent=acc.avatar||'🎬';
+  document.getElementById('navName').textContent=nm;
+  const badge=document.getElementById('userBadge');
+  badge.className='user-badge'+(cvip?' vip-user':'');
   const isA=role==='admin';
   document.getElementById('btnAdmin').style.display=isA?'':'none';
   document.getElementById('btnAddLib').style.display=isA?'':'none';
   document.getElementById('btnAddEp').style.display='none';
+  document.getElementById('vipBanner').style.display=(!cvip&&!isA)?'flex':'none';
   renderAll();
+  subscribeConversations();
+  if(cvip)showToast('Bienvenue ⭐ '+nm+' — Accès VIP','vip');
 }
 
 window.doLogout=()=>{
-  sessionStorage.clear(); currentUser=null; currentRole=null; currentLibId=null;
+  sessionStorage.clear();cu=null;cr=null;cvip=false;curLib=null;
+  if(convUnsub)convUnsub();if(msgUnsub)msgUnsub();
   document.getElementById('app').style.display='none';
-  document.getElementById('lUser').value=''; document.getElementById('lPass').value='';
+  document.getElementById('lUser').value='';document.getElementById('lPass').value='';
   document.getElementById('loginScreen').classList.add('open');
 };
 
-/* ── THEME ── */
-window.toggleTheme=()=>{
-  const html=document.documentElement;
-  const isDark=html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme',isDark?'light':'dark');
-  document.getElementById('themeBtn').textContent=isDark?'☀️':'🌙';
+/* PAGE SWITCH */
+window.switchPage=(page)=>{
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.getElementById('tab-'+page).classList.add('active');
+  document.getElementById('mainFooter').style.display=page==='chat'?'none':'block';
+  if(page==='chat'){document.getElementById('chatNotifDot').classList.remove('show');document.getElementById('searchBarContainer').style.display='none';}
+  else document.getElementById('searchBarContainer').style.display='';
 };
 
-/* ── SEARCH ── */
+/* THEME */
+window.toggleTheme=()=>{const h=document.documentElement;const d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';};
+
+/* SEARCH */
 window.doSearch=()=>{
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
   const res=document.getElementById('searchResults');
-  if(!q){ res.classList.remove('visible'); return; }
-  const matches=[];
-  libs.forEach(l=>{ if(l.name.toLowerCase().includes(q)) matches.push({type:'lib',label:l.name,sub:'Bibliothèque',id:l.id}); });
-  eps.forEach(e=>{ if(e.title.toLowerCase().includes(q)){ const lib=libs.find(l=>l.id===e.libId); matches.push({type:'ep',label:e.title,sub:lib?lib.name:'',id:e.id,libId:e.libId}); } });
-  if(!matches.length){ res.innerHTML='<div class="search-item" style="color:var(--muted)">Aucun résultat</div>'; res.classList.add('visible'); return; }
-  res.innerHTML=matches.slice(0,8).map(m=>`<div class="search-item" onclick="searchClick('${m.type}','${m.id}','${m.libId||''}')"><div><div>${esc(m.label)}</div><div class="search-item-sub">${esc(m.sub)}</div></div></div>`).join('');
+  if(!q){res.classList.remove('visible');return;}
+  const m=[];
+  libs.forEach(l=>{if((cvip||!l.vipOnly)&&l.name.toLowerCase().includes(q))m.push({type:'lib',label:l.name,sub:'Bibliothèque',id:l.id});});
+  eps.forEach(e=>{if((cvip||!e.vipOnly)&&e.title.toLowerCase().includes(q)){const l=libs.find(l=>l.id===e.libId);m.push({type:'ep',label:e.title,sub:l?l.name:'',id:e.id,libId:e.libId});}});
+  if(!m.length){res.innerHTML='<div class="search-item" style="color:var(--muted)">Aucun résultat</div>';res.classList.add('visible');return;}
+  res.innerHTML=m.slice(0,7).map(x=>`<div class="search-item" onclick="searchClick('${x.type}','${x.id}','${x.libId||''}')"><div>${esc(x.label)}</div><div class="search-item-sub">${esc(x.sub)}</div></div>`).join('');
   res.classList.add('visible');
 };
 window.hideSearch=()=>document.getElementById('searchResults').classList.remove('visible');
-window.searchClick=(type,id,libId)=>{
-  document.getElementById('searchInput').value='';
-  hideSearch();
-  if(type==='lib') openLib(id);
-  else { openLib(libId); setTimeout(()=>playEp(id),300); }
-};
+window.searchClick=(t,id,lid)=>{document.getElementById('searchInput').value='';hideSearch();if(t==='lib')openLib(id);else{openLib(lid);setTimeout(()=>playEp(id),300);}};
 
-/* ── RENDER ── */
-function renderAll(){ renderTags(); renderLibs(); if(currentLibId) renderEps(currentLibId); }
-
+/* RENDER */
+function renderAll(){renderTags();renderLibs();if(curLib)renderEps(curLib);}
 function renderTags(){
   const cats=[...new Set(libs.map(l=>l.category).filter(Boolean))];
-  document.getElementById('tagList').innerHTML=
-    `<span class="tag ${!activeFilter?'active':''}" onclick="filterCat(null,this)">Toutes</span>`+
-    cats.map(c=>`<span class="tag ${activeFilter===c.toLowerCase()?'active':''}" onclick="filterCat('${esc(c).toLowerCase()}',this)">${esc(c)}</span>`).join('');
+  document.getElementById('tagList').innerHTML=`<span class="tag ${!afilter?'active':''}" onclick="filterCat(null,this)">Toutes</span>`+cats.map(c=>`<span class="tag ${afilter===c.toLowerCase()?'active':''}" onclick="filterCat('${esc(c).toLowerCase()}',this)">${esc(c)}</span>`).join('');
 }
-window.filterCat=(cat,el)=>{ activeFilter=cat; document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active')); el.classList.add('active'); renderLibs(); };
+window.filterCat=(cat,el)=>{afilter=cat;document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderLibs();};
 
-/* ── LIBRARIES ── */
 function renderLibs(){
   const grid=document.getElementById('libGrid');
-  const filtered=activeFilter?libs.filter(l=>(l.category||'').toLowerCase()===activeFilter):libs;
-  if(!filtered.length){ grid.innerHTML=`<div class="empty"><p>Aucune bibliothèque.${currentRole==='admin'?'<br>Clique sur <strong style="color:var(--text)">+ Série</strong> pour commencer !':''}</p></div>`; return; }
-  const isA=currentRole==='admin';
-  grid.innerHTML=filtered.map(lib=>{
-    const count=eps.filter(e=>e.libId===lib.id).length;
-    const thumb=lib.image?`<img src="${esc(lib.image)}" alt="${esc(lib.name)}" onerror="this.style.display='none'">`:`<div class="lib-cover-ph">📚</div>`;
-    const trailerBtn=isA&&lib.trailer?`<button class="icon-btn trailer" title="Bande annonce" onclick="event.stopPropagation();playTrailer('${lib.id}')">▶</button>`:'';
-    const trailerBtnV=!isA&&lib.trailer?`<button class="icon-btn trailer" title="Bande annonce" onclick="event.stopPropagation();playTrailer('${lib.id}')">▶</button>`:'';
-    const adm=isA?`<div class="lib-admin">${trailerBtn}<button class="icon-btn del" onclick="event.stopPropagation();delLib('${lib.id}')">✕</button></div>`:`<div class="lib-admin">${trailerBtnV}</div>`;
-    return `<div class="lib-card" onclick="openLib('${lib.id}')"><div class="lib-cover">${thumb}<span class="lib-count">${count} ép.</span></div>${adm}<div class="lib-body"><div class="lib-name">${esc(lib.name)}</div><div class="lib-meta">${esc(lib.creator||'')}${lib.category?' · '+esc(lib.category):''}</div></div></div>`;
+  const fl=afilter?libs.filter(l=>(l.category||'').toLowerCase()===afilter):libs;
+  if(!fl.length){grid.innerHTML='<div class="empty"><p>Aucune bibliothèque.</p></div>';return;}
+  const isA=cr==='admin';
+  grid.innerHTML=fl.map(lib=>{
+    const vip=lib.vipOnly,can=cvip||!vip;
+    const cnt=eps.filter(e=>e.libId===lib.id).length;
+    const th=lib.image?`<img src="${esc(lib.image)}" alt="${esc(lib.name)}" onerror="this.style.display='none'">`:`<div class="lib-cover-ph">${vip?'⭐':'📚'}</div>`;
+    const lk=(!can&&!isA)?`<div class="vip-lock"><div class="vip-lock-icon">🔒</div><div class="vip-lock-text">VIP</div></div>`:'';
+    const vb=vip?`<div class="lib-vip-badge"><span class="vip-badge">VIP</span></div>`:'';
+    const tr=lib.trailer?`<button class="icon-btn trailer" onclick="event.stopPropagation();playTrailer('${lib.id}')">▶</button>`:'';
+    const adm=isA?`<div class="lib-admin">${tr}<button class="icon-btn del" onclick="event.stopPropagation();delLib('${lib.id}')">✕</button></div>`:lib.trailer?`<div class="lib-admin">${tr}</div>`:'';
+    return `<div class="lib-card ${vip?'vip-only':''}" onclick="${can||isA?`openLib('${lib.id}')`:''}" style="${!can&&!isA?'cursor:default':''}"><div class="lib-cover">${th}${lk}<span class="lib-count">${cnt} ép.</span></div>${vb}${adm}<div class="lib-body"><div class="lib-name">${esc(lib.name)}</div><div class="lib-meta">${esc(lib.creator||'')}${lib.category?' · '+esc(lib.category):''}</div></div></div>`;
   }).join('');
 }
 
 window.openLib=(id)=>{
-  currentLibId=id;
+  curLib=id;
   const lib=libs.find(l=>l.id===id);
-  document.getElementById('epViewTitle').textContent=lib?lib.name:'Épisodes';
+  document.getElementById('epViewTitle').textContent=lib?(lib.vipOnly?'⭐ ':'')+lib.name:'';
   document.getElementById('libView').style.display='none';
   document.getElementById('epView').style.display='block';
   document.getElementById('heroZone').style.display='none';
-  if(currentRole==='admin'){ document.getElementById('btnAddLib').style.display='none'; document.getElementById('btnAddEp').style.display=''; }
+  document.getElementById('vipBanner').style.display='none';
+  if(cr==='admin'){document.getElementById('btnAddLib').style.display='none';document.getElementById('btnAddEp').style.display='';}
   renderEps(id);
 };
 window.closeLib=()=>{
-  currentLibId=null;
+  curLib=null;
   document.getElementById('epView').style.display='none';
   document.getElementById('libView').style.display='block';
   document.getElementById('heroZone').style.display='block';
-  if(currentRole==='admin'){ document.getElementById('btnAddLib').style.display=''; document.getElementById('btnAddEp').style.display='none'; }
+  document.getElementById('vipBanner').style.display=(!cvip&&cr!=='admin')?'flex':'none';
+  if(cr==='admin'){document.getElementById('btnAddLib').style.display='';document.getElementById('btnAddEp').style.display='none';}
 };
 window.delLib=async(id)=>{
-  if(!confirm('Supprimer cette bibliothèque et tous ses épisodes ?'))return;
+  if(!confirm('Supprimer cette bibliothèque ?'))return;
   await deleteDoc(doc(db,'libs',id));
   await Promise.all(eps.filter(e=>e.libId===id).map(e=>deleteDoc(doc(db,'eps',e.id))));
-  await loadAll(); renderAll(); showToast('Bibliothèque supprimée');
+  await loadAll();renderAll();showToast('Supprimée');
 };
 
-/* ── TRAILER ── */
-window.playTrailer=(libId)=>{
-  const lib=libs.find(l=>l.id===libId); if(!lib||!lib.trailer)return;
+window.playTrailer=(lid)=>{
+  const lib=libs.find(l=>l.id===lid);if(!lib||!lib.trailer)return;
   document.getElementById('trailerTitle').textContent=lib.name;
   const vd=document.getElementById('trailerVideo');
-  if(lib.trailer.includes('youtube')||lib.trailer.includes('youtu.be')){
-    let src=lib.trailer.replace('watch?v=','embed/').replace('youtu.be/','www.youtube.com/embed/');
-    vd.innerHTML=`<iframe src="${src}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
-  } else {
-    vd.innerHTML=`<video controls autoplay><source src="${esc(lib.trailer)}"></video>`;
-  }
+  if(lib.trailer.includes('youtube')||lib.trailer.includes('youtu.be')){let s=lib.trailer.replace('watch?v=','embed/').replace('youtu.be/','www.youtube.com/embed/');vd.innerHTML=`<iframe src="${s}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;}
+  else vd.innerHTML=`<video controls autoplay><source src="${esc(lib.trailer)}"></video>`;
   document.getElementById('trailerOverlay').classList.add('open');
 };
-window.closeTrailer=()=>{ document.getElementById('trailerOverlay').classList.remove('open'); document.getElementById('trailerVideo').innerHTML=''; };
+window.closeTrailer=()=>{document.getElementById('trailerOverlay').classList.remove('open');document.getElementById('trailerVideo').innerHTML='';};
 
-/* ── EPISODES ── */
-function renderEps(libId){
+function renderEps(lid){
   const grid=document.getElementById('epGrid');
-  const list=eps.filter(e=>e.libId===libId).sort((a,b)=>(parseInt(a.num)||9999)-(parseInt(b.num)||9999));
-  if(!list.length){ grid.innerHTML=`<div class="empty"><p>Aucun épisode.${currentRole==='admin'?'<br>Clique sur <strong style="color:var(--text)">+ Épisode</strong>':''}</p></div>`; return; }
-  const isA=currentRole==='admin';
-  const isNew=d=>d&&(Date.now()-new Date(d))<7*24*3600*1000;
+  const list=eps.filter(e=>e.libId===lid).sort((a,b)=>(parseInt(a.num)||9999)-(parseInt(b.num)||9999));
+  if(!list.length){grid.innerHTML=`<div class="empty"><p>Aucun épisode.${cr==='admin'?'<br>Clique sur <strong>+ Ep.</strong>':''}</p></div>`;return;}
+  const isA=cr==='admin',isNew=d=>d&&(Date.now()-new Date(d))<7*24*3600*1000;
   grid.innerHTML=list.map(ep=>{
-    const thumb=ep.image?`<img src="${esc(ep.image)}" alt="${esc(ep.title)}" onerror="this.style.display='none'">`:`<div class="card-ph">▶</div>`;
-    const nb=isNew(ep.date)?`<span class="badge-new">Nouveau</span>`:'';
-    const enb=ep.num?`<span class="ep-num-badge">Ép. ${esc(ep.num)}</span>`:'';
-    const qb=ep.quality?`<span style="position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.75);font-size:10px;color:var(--accent);padding:2px 7px;border-radius:4px;font-weight:500">${esc(ep.quality)}</span>`:'';
+    const vip=ep.vipOnly,can=cvip||!vip;
+    const th=ep.image?`<img src="${esc(ep.image)}" onerror="this.style.display='none'">`:`<div class="card-ph">${vip?'⭐':'▶'}</div>`;
+    const lk=(!can&&!isA)?`<div class="vip-lock"><div class="vip-lock-icon">🔒</div><div class="vip-lock-text">VIP</div></div>`:'';
+    const vt=vip?`<span class="vip-badge" style="font-size:9px">VIP</span>`:'';
     const adm=isA?`<div class="card-del"><button class="btn-del" onclick="event.stopPropagation();delEp('${ep.id}')">Supprimer</button></div>`:'';
-    return `<div class="card" onclick="playEp('${ep.id}')"><div class="card-thumb">${thumb}<div class="play-btn"><div class="play-icon"><svg width="18" height="18" fill="#0a0a0f" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>${nb}${enb}${qb}</div><div class="card-body"><div class="card-title">${esc(ep.title)}</div><div class="card-desc">${esc(ep.description||'')}</div><div class="card-meta">${ep.dur?`<span>⏱ ${esc(ep.dur)}</span>`:''}${ep.date?`<span>📅 ${new Date(ep.date).toLocaleDateString('fr-FR')}</span>`:''}</div>${adm}</div></div>`;
+    return `<div class="card ${vip?'vip-only':''}" onclick="${can||isA?`playEp('${ep.id}')`:''}" style="${!can&&!isA?'cursor:default':''}">
+      <div class="card-thumb">${th}${can||isA?`<div class="play-btn"><div class="play-icon"><svg width="18" height="18" fill="#0a0a0f" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>`:''}`+lk+
+      (isNew(ep.date)?`<span class="badge-new">Nouveau</span>`:'')+
+      (ep.num?`<span class="ep-num-badge">Ép. ${esc(ep.num)}</span>`:'')+
+      (ep.quality?`<span class="quality-badge">${esc(ep.quality)}</span>`:'')+
+      `</div><div class="card-body"><div class="card-title">${esc(ep.title)} ${vt}</div><div class="card-desc">${esc(ep.description||'')}</div><div class="card-meta">${ep.dur?`<span>⏱ ${esc(ep.dur)}</span>`:''}${ep.date?`<span>📅 ${new Date(ep.date).toLocaleDateString('fr-FR')}</span>`:''}</div>${adm}</div></div>`;
   }).join('');
 }
-window.delEp=async(id)=>{
-  if(!confirm('Supprimer cet épisode ?'))return;
-  await deleteDoc(doc(db,'eps',id));
-  await loadAll(); if(currentLibId) renderEps(currentLibId); showToast('Épisode supprimé');
-};
+window.delEp=async(id)=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'eps',id));await loadAll();if(curLib)renderEps(curLib);showToast('Supprimé');};
 
-/* ── PLAYER ── */
+/* AD */
+window.adClick=()=>{if(settings.adLink)window.open(settings.adLink,'_blank');};
+window.skipAd=()=>{clearInterval(adTimer);document.getElementById('adOverlay').classList.remove('open');if(pendingEp){seenAds.add(pendingEp);launchPlayer(pendingEp);pendingEp=null;}};
+function showAd(epId){
+  document.getElementById('adImg').src=settings.adImage||'';
+  document.getElementById('adTitle').textContent=settings.adText||'';
+  document.getElementById('adTimerBadge').textContent='5s';
+  document.getElementById('adCountdown').textContent='5';
+  document.getElementById('adSkipBtn').classList.remove('visible');
+  pendingEp=epId;document.getElementById('adOverlay').classList.add('open');
+  let r=5;adTimer=setInterval(()=>{r--;document.getElementById('adTimerBadge').textContent=r+'s';document.getElementById('adCountdown').textContent=r;if(r<=0){clearInterval(adTimer);document.getElementById('adSkipBtn').classList.add('visible');document.getElementById('adTimerBadge').textContent='';}},1000);
+}
+
 window.playEp=(id)=>{
-  const ep=eps.find(e=>e.id===id); if(!ep)return;
+  const ep=eps.find(e=>e.id===id);if(!ep)return;
+  if((ep.vipOnly||libs.find(l=>l.id===ep.libId)?.vipOnly)&&!cvip&&cr!=='admin'){showToast('Contenu VIP ⭐','vip');return;}
+  if(!cvip&&cr!=='admin'&&settings.adsEnabled&&settings.adImage&&!seenAds.has(id)){showAd(id);return;}
+  seenAds.add(id);launchPlayer(id);
+};
+function launchPlayer(id){
+  const ep=eps.find(e=>e.id===id);if(!ep)return;
   const lib=libs.find(l=>l.id===ep.libId);
   document.getElementById('modalLib').textContent=lib?lib.name:'';
   document.getElementById('modalTitle').textContent=(ep.num?'Ép. '+ep.num+' — ':'')+ep.title;
   document.getElementById('modalDesc').textContent=ep.description||'';
   const vd=document.getElementById('modalVideo');
-  if(ep.vtype==='youtube'){
-    let src=ep.video.replace('watch?v=','embed/').replace('youtu.be/','www.youtube.com/embed/');
-    vd.innerHTML=`<iframe src="${src}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
-  } else {
-    const subsTrack=ep.subs?`<track kind="subtitles" src="${esc(ep.subs)}" srclang="fr" label="Français" default>`:'';
-    vd.innerHTML=`<video controls autoplay><source src="${esc(ep.video)}">${subsTrack}<p style="color:#888;padding:2rem;text-align:center;font-size:13px">Vidéo non disponible.</p></video>`;
-  }
+  if(ep.vtype==='youtube'){let s=ep.video.replace('watch?v=','embed/').replace('youtu.be/','www.youtube.com/embed/');vd.innerHTML=`<iframe src="${s}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;}
+  else{const sb=ep.subs?`<track kind="subtitles" src="${esc(ep.subs)}" srclang="fr" label="Français" default>`:'';vd.innerHTML=`<video controls autoplay><source src="${esc(ep.video)}">${sb}</video>`;}
   document.getElementById('playerOverlay').classList.add('open');
-};
-window.closePlayer=()=>{ document.getElementById('playerOverlay').classList.remove('open'); document.getElementById('modalVideo').innerHTML=''; };
+}
+window.closePlayer=()=>{document.getElementById('playerOverlay').classList.remove('open');document.getElementById('modalVideo').innerHTML='';};
 
-/* ── ADD LIB ── */
-window.openAddLib=()=>document.getElementById('addLibScreen').classList.add('open');
-window.closeAddLib=()=>{ document.getElementById('addLibScreen').classList.remove('open'); ['lName','lCreator','lDesc','lImage','lTrailer','lCategory'].forEach(id=>document.getElementById(id).value=''); };
-window.saveLib=async()=>{
-  const name=document.getElementById('lName').value.trim();
-  if(!name){alert('Le nom est obligatoire.');return;}
-  await addDoc(collection(db,'libs'),{name,creator:document.getElementById('lCreator').value.trim(),description:document.getElementById('lDesc').value.trim(),image:document.getElementById('lImage').value.trim(),trailer:document.getElementById('lTrailer').value.trim(),category:document.getElementById('lCategory').value.trim(),createdAt:Date.now()});
-  await loadAll(); closeAddLib(); renderAll(); showToast('Bibliothèque créée !','success');
-};
+/* ══════════════════════════════════
+   CHAT SYSTEM
+══════════════════════════════════ */
 
-/* ── ADD EP ── */
-window.openAddEp=()=>{
-  const sel=document.getElementById('epLib');
-  sel.innerHTML=libs.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
-  if(currentLibId) sel.value=currentLibId;
-  document.getElementById('epDate').value=new Date().toISOString().split('T')[0];
-  document.getElementById('addEpScreen').classList.add('open');
-};
-window.closeAddEp=()=>{ document.getElementById('addEpScreen').classList.remove('open'); ['epTitle','epNum','epDesc','epVideo','epImage','epSubs','epDur'].forEach(id=>document.getElementById(id).value=''); document.getElementById('epVtype').value='file'; document.getElementById('epQuality').value=''; updateVfields(); };
-window.updateVfields=()=>{
-  const t=document.getElementById('epVtype').value;
-  document.getElementById('epVideo').placeholder=t==='youtube'?'https://www.youtube.com/watch?v=...':'https://archive.org/download/...';
-  document.getElementById('epVlabel').textContent=t==='youtube'?'Lien YouTube *':'URL de la vidéo *';
-};
-window.saveEp=async()=>{
-  const title=document.getElementById('epTitle').value.trim();
-  const video=document.getElementById('epVideo').value.trim();
-  const libId=document.getElementById('epLib').value;
-  if(!title||!video||!libId){alert('Le titre et la vidéo sont obligatoires.');return;}
-  await addDoc(collection(db,'eps'),{libId,title,video,vtype:document.getElementById('epVtype').value,num:document.getElementById('epNum').value.trim(),description:document.getElementById('epDesc').value.trim(),image:document.getElementById('epImage').value.trim(),subs:document.getElementById('epSubs').value.trim(),quality:document.getElementById('epQuality').value,dur:document.getElementById('epDur').value.trim(),date:document.getElementById('epDate').value,createdAt:Date.now()});
-  await loadAll(); closeAddEp(); renderAll(); if(currentLibId) renderEps(currentLibId); showToast('Épisode publié !','success');
-};
+function getConvId(u1,u2){return [u1,u2].sort().join('_');}
 
-/* ── ADMIN PANEL ── */
-window.openAdminPanel=async()=>{
-  await loadAll();
-  renderAccountsTable();
-  renderScheduledList();
-  // Load settings into UI
-  document.getElementById('maintenanceToggle').checked=!!settings.maintenance;
-  document.getElementById('maintenanceLabel').textContent=settings.maintenance?'Site fermé':'Site ouvert';
-  document.getElementById('limitToggle').checked=!!settings.limitEnabled;
-  document.getElementById('maxConn').value=settings.maxConn||5;
-  // Fill schedule lib select
-  const sel=document.getElementById('schedLib');
-  sel.innerHTML=libs.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
-  document.getElementById('adminPanel').classList.add('open');
-};
-window.closeAdminPanel=()=>document.getElementById('adminPanel').classList.remove('open');
-window.switchTab=(tabId,el)=>{
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.atab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  el.classList.add('active');
-};
-
-/* ── ACCOUNTS ── */
-function renderAccountsTable(){
-  const t=document.getElementById('accountsTable');
-  t.innerHTML=`<tr><th>Identifiant</th><th>Prénom</th><th>Rôle</th><th>Statut</th><th>Actions</th></tr>`+
-  accounts.map(a=>`<tr>
-    <td style="font-weight:500">${esc(a.id)}</td>
-    <td>${esc(a.name||'—')}</td>
-    <td><span class="status-badge ${a.role==='admin'?'role-admin':'role-viewer'}">${a.role==='admin'?'Admin':'Spectateur'}</span></td>
-    <td><span class="status-badge ${a.blocked?'status-blocked':'status-active'}">${a.blocked?'Bloqué':'Actif'}</span></td>
-    <td style="display:flex;gap:6px">
-      ${a.id!==currentUser?`<button class="btn-danger" onclick="toggleBlock('${a.id}',${!a.blocked})">${a.blocked?'Débloquer':'Bloquer'}</button>`:'<span style="color:var(--muted);font-size:12px">Vous</span>'}
-      ${a.id!==currentUser?`<button class="btn-danger" onclick="deleteAccount('${a.id}')">Suppr.</button>`:''}
-    </td>
-  </tr>`).join('');
+function subscribeConversations(){
+  if(convUnsub)convUnsub();
+  convUnsub=onSnapshot(collection(db,'conversations'),snap=>{
+    renderConvList(snap.docs.map(d=>({id:d.id,...d.data()})));
+    renderReqList(snap.docs.map(d=>({id:d.id,...d.data()})));
+  });
 }
 
-window.openCreateAccount=()=>{ document.getElementById('adminPanel').classList.remove('open'); document.getElementById('createAccScreen').classList.add('open'); };
-window.closeCreateAccount=()=>{ document.getElementById('createAccScreen').classList.remove('open'); ['newUser','newPass','newName'].forEach(id=>document.getElementById(id).value=''); document.getElementById('adminPanel').classList.add('open'); };
-window.createAccount=async()=>{
-  const u=document.getElementById('newUser').value.trim();
-  const p=document.getElementById('newPass').value.trim();
-  const r=document.getElementById('newRole').value;
-  const n=document.getElementById('newName').value.trim();
-  if(!u||!p){alert('Identifiant et mot de passe obligatoires.');return;}
-  if(accounts.find(a=>a.id===u)){alert('Cet identifiant existe déjà.');return;}
-  await setDoc(doc(db,'accounts',u),{pass:p,role:r,name:n||u,avatar:'🎬',blocked:false,createdAt:Date.now()});
-  await loadAll(); closeCreateAccount(); renderAccountsTable(); showToast('Compte créé !','success');
-};
-window.toggleBlock=async(uid,block)=>{
-  await updateDoc(doc(db,'accounts',uid),{blocked:block});
-  await loadAll(); renderAccountsTable(); showToast(block?'Utilisateur bloqué':'Utilisateur débloqué');
-};
-window.deleteAccount=async(uid)=>{
-  if(!confirm('Supprimer ce compte ?'))return;
-  await deleteDoc(doc(db,'accounts',uid));
-  await loadAll(); renderAccountsTable(); showToast('Compte supprimé');
-};
-
-/* ── SECURITY ── */
-window.toggleMaintenance=async()=>{
-  const on=document.getElementById('maintenanceToggle').checked;
-  document.getElementById('maintenanceLabel').textContent=on?'Site fermé':'Site ouvert';
-  await setDoc(doc(db,'settings','main'),{...settings,maintenance:on});
-  settings.maintenance=on;
-  showToast(on?'Site fermé — seul l\'admin peut se connecter':'Site rouvert !',on?'error':'success');
-};
-window.toggleLimit=async()=>{
-  const on=document.getElementById('limitToggle').checked;
-  await setDoc(doc(db,'settings','main'),{...settings,limitEnabled:on});
-  settings.limitEnabled=on;
-  showToast(on?'Limite de connexions activée':'Limite désactivée');
-};
-window.saveLimit=async()=>{
-  const max=parseInt(document.getElementById('maxConn').value)||5;
-  await setDoc(doc(db,'settings','main'),{...settings,maxConn:max});
-  settings.maxConn=max;
-};
-
-/* ── SCHEDULED ── */
-window.saveScheduled=async()=>{
-  const libId=document.getElementById('schedLib').value;
-  const title=document.getElementById('schedTitle').value.trim();
-  const video=document.getElementById('schedVideo').value.trim();
-  const date=document.getElementById('schedDate').value;
-  if(!title||!video||!libId||!date){alert('Remplis tous les champs obligatoires.');return;}
-  await addDoc(collection(db,'scheduled'),{libId,title,video,num:document.getElementById('schedNum').value.trim(),description:document.getElementById('schedDesc').value.trim(),image:document.getElementById('schedImage').value.trim(),dur:document.getElementById('schedDur').value.trim(),publishAt:new Date(date).getTime(),vtype:'file',createdAt:Date.now()});
-  await loadAll(); renderScheduledList();
-  ['schedTitle','schedNum','schedDesc','schedVideo','schedImage','schedDur'].forEach(id=>document.getElementById(id).value='');
-  showToast('Épisode programmé !','success');
-};
-
-function renderScheduledList(){
-  const list=document.getElementById('scheduledList');
-  if(!scheduled.length){ list.innerHTML='<div style="font-size:13px;color:var(--muted)">Aucun épisode programmé.</div>'; return; }
-  list.innerHTML=scheduled.map(s=>{
-    const lib=libs.find(l=>l.id===s.libId);
-    const d=new Date(s.publishAt);
-    return `<div style="background:var(--bg3);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:1rem">
-      <div><div style="font-size:13px;font-weight:500">${esc(s.title)}</div><div style="font-size:11px;color:var(--muted)">${lib?esc(lib.name):''} · ${d.toLocaleString('fr-FR')}</div></div>
-      <button class="btn-del" onclick="delScheduled('${s.id}')">Annuler</button>
+function renderConvList(convs){
+  const myConvs=convs.filter(c=>{
+    if(c.type==='group')return c.members&&c.members.includes(cu);
+    return (c.u1===cu||c.u2===cu)&&c.status==='accepted';
+  });
+  const el=document.getElementById('convList');
+  if(!myConvs.length){el.innerHTML='<div style="padding:1rem;font-size:12px;color:var(--muted);text-align:center">Aucune conversation</div>';return;}
+  el.innerHTML=myConvs.map(c=>{
+    let name,avatar,preview;
+    if(c.type==='group'){name=c.name;avatar='👥';preview=c.lastMsg||'Groupe créé';}
+    else{const other=accounts.find(a=>a.id===(c.u1===cu?c.u2:c.u1));name=other?.name||'?';avatar=other?.avatar||'🎬';preview=c.lastMsg||'Démarrer la conversation';}
+    const active=currentConvId===c.id;
+    return `<div class="chat-item ${active?'active':''}" onclick="openConv('${c.id}')">
+      <div class="chat-item-avatar ${c.type==='group'?'group':''}">${avatar}</div>
+      <div class="chat-item-info"><div class="chat-item-name">${esc(name)}</div><div class="chat-item-preview">${esc(preview)}</div></div>
     </div>`;
   }).join('');
 }
 
-window.delScheduled=async(id)=>{ await deleteDoc(doc(db,'scheduled',id)); await loadAll(); renderScheduledList(); };
-
-async function checkScheduled(){
-  const now=Date.now();
-  const toPublish=scheduled.filter(s=>s.publishAt<=now);
-  for(const s of toPublish){
-    await addDoc(collection(db,'eps'),{libId:s.libId,title:s.title,video:s.video,vtype:s.vtype||'file',num:s.num||'',description:s.description||'',image:s.image||'',dur:s.dur||'',date:new Date(s.publishAt).toISOString().split('T')[0],createdAt:s.publishAt});
-    await deleteDoc(doc(db,'scheduled',s.id));
-  }
-  if(toPublish.length>0){ await loadAll(); renderAll(); }
+function renderReqList(convs){
+  const reqs=convs.filter(c=>c.type==='dm'&&c.status==='pending'&&c.u2===cu);
+  const badge=document.getElementById('reqBadge');
+  if(reqs.length){badge.textContent=reqs.length;badge.classList.add('show');document.getElementById('chatNotifDot').classList.add('show');}
+  else{badge.classList.remove('show');document.getElementById('chatNotifDot').classList.remove('show');}
+  const el=document.getElementById('reqList');
+  if(!reqs.length){el.innerHTML='<div style="padding:1rem;font-size:12px;color:var(--muted);text-align:center">Aucune demande</div>';return;}
+  el.innerHTML=reqs.map(r=>{
+    const sender=accounts.find(a=>a.id===r.u1);
+    return `<div class="req-item">
+      <div class="req-avatar">${sender?.avatar||'🎬'}</div>
+      <div class="req-info"><div class="req-name">${esc(sender?.name||r.u1)}</div><div class="req-sub">Demande d'ami</div></div>
+      <div class="req-actions">
+        <button class="btn-accept" onclick="acceptReq('${r.id}')">✓</button>
+        <button class="btn-reject" onclick="rejectReq('${r.id}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-/* ── PROFILE ── */
+window.switchSideTab=(tab,el)=>{
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('convList').style.display=tab==='convs'?'block':'none';
+  document.getElementById('reqList').style.display=tab==='reqs'?'block':'none';
+};
+
+window.acceptReq=async(cid)=>{await updateDoc(doc(db,'conversations',cid),{status:'accepted'});showToast('Ami accepté !','success');};
+window.rejectReq=async(cid)=>{await deleteDoc(doc(db,'conversations',cid));showToast('Demande refusée');};
+
+window.openConv=async(cid)=>{
+  currentConvId=cid;
+  const cdoc=await getDoc(doc(db,'conversations',cid));
+  currentConvData={id:cid,...cdoc.data()};
+  renderChatMain();
+  subscribeMessages(cid);
+};
+
+function renderChatMain(){
+  const c=currentConvData;
+  let name,avatar,sub,isGroup=c.type==='group',isOwner=c.createdBy===cu;
+  const isAdmin=cr==='admin';
+  if(isGroup){name=c.name;avatar='👥';sub=`${c.members?.length||0} membres`;}
+  else{const other=accounts.find(a=>a.id===(c.u1===cu?c.u2:c.u1));name=other?.name||'?';avatar=other?.avatar||'🎬';sub='Message privé';}
+  document.getElementById('chatMain').innerHTML=`
+    <div class="chat-header">
+      <div class="chat-header-avatar">${avatar}</div>
+      <div class="chat-header-info"><div class="chat-header-name">${esc(name)}</div><div class="chat-header-sub">${esc(sub)}</div></div>
+      <div class="chat-header-actions">
+        ${isGroup&&(isOwner||isAdmin)?`<button class="btn-icon" onclick="openGrpSettings()" title="Paramètres">⚙️</button>`:''}
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages"><div class="chat-empty"><div class="chat-empty-icon">💬</div><div>Envoyez votre premier message !</div></div></div>
+    <div class="chat-input-area">
+      <div class="gif-picker" id="gifPicker">
+        <input class="gif-search" id="gifSearch" placeholder="Rechercher un GIF..." oninput="searchGifs()">
+        <div class="gif-grid" id="gifGrid"><div class="gif-loading">Tapez pour chercher un GIF...</div></div>
+      </div>
+      <div class="chat-input-row">
+        <button class="chat-action-btn" onclick="toggleGifPicker()" title="GIF">GIF</button>
+        <textarea class="chat-input" id="chatInput" placeholder="Message..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+        <button class="chat-send-btn" onclick="sendMsg()">➤</button>
+      </div>
+    </div>`;
+}
+
+function subscribeMessages(cid){
+  if(msgUnsub)msgUnsub();
+  msgUnsub=onSnapshot(query(collection(db,'conversations',cid,'messages'),orderBy('createdAt','asc')),snap=>{
+    const msgs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderMessages(msgs);
+  });
+}
+
+function renderMessages(msgs){
+  const el=document.getElementById('chatMessages');
+  if(!el)return;
+  if(!msgs.length){el.innerHTML='<div class="chat-empty"><div class="chat-empty-icon">💬</div><div>Envoyez votre premier message !</div></div>';return;}
+  const isAdmin=cr==='admin';
+  el.innerHTML=msgs.map(m=>{
+    const mine=m.from===cu;
+    const sender=accounts.find(a=>a.id===m.from);
+    const isGroup=currentConvData?.type==='group';
+    const canDel=mine||isAdmin;
+    let bubble;
+    if(m.type==='gif'){bubble=`<div class="msg-bubble gif-msg ${mine?'mine':'other'}"><img src="${esc(m.url)}" alt="GIF" loading="lazy"></div>`;}
+    else{bubble=`<div class="msg-bubble ${mine?'mine':'other'}">${esc(m.text)}</div>`;}
+    return `<div class="msg-group">
+      ${isGroup&&!mine?`<div class="msg-sender">${esc(sender?.name||m.from)}</div>`:''}
+      <div class="msg-row ${mine?'mine':''}">
+        ${!mine?`<div class="msg-avatar">${sender?.avatar||'🎬'}</div>`:''}
+        ${bubble}
+        ${canDel?`<button class="msg-del-btn" onclick="delMsg('${m.id}')">✕</button>`:''}
+      </div>
+      ${mine?`<div class="msg-time" style="text-align:right;margin-right:${canDel?'30px':'0'}">${formatTime(m.createdAt)}</div>`:''}
+    </div>`;
+  }).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+function formatTime(ts){
+  if(!ts)return '';
+  const d=ts.toDate?ts.toDate():new Date(ts);
+  return d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+}
+
+window.sendMsg=async()=>{
+  const input=document.getElementById('chatInput');
+  if(!input)return;
+  const text=input.value.trim();
+  if(!text||!currentConvId)return;
+  input.value='';
+  const msg={from:cu,text,type:'text',createdAt:serverTimestamp()};
+  await addDoc(collection(db,'conversations',currentConvId,'messages'),msg);
+  await updateDoc(doc(db,'conversations',currentConvId),{lastMsg:text.slice(0,40)});
+};
+
+window.delMsg=async(mid)=>{
+  if(!confirm('Supprimer ce message ?'))return;
+  await deleteDoc(doc(db,'conversations',currentConvId,'messages',mid));
+};
+
+/* GIF */
+window.toggleGifPicker=()=>{const g=document.getElementById('gifPicker');g.classList.toggle('open');};
+let gifTimeout=null;
+window.searchGifs=()=>{
+  clearTimeout(gifTimeout);
+  gifTimeout=setTimeout(async()=>{
+    const q=document.getElementById('gifSearch').value.trim();
+    const grid=document.getElementById('gifGrid');
+    if(!q){grid.innerHTML='<div class="gif-loading">Tapez pour chercher...</div>';return;}
+    grid.innerHTML='<div class="gif-loading">Chargement...</div>';
+    try{
+      const r=await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_KEY}&q=${encodeURIComponent(q)}&limit=12&rating=g`);
+      const data=await r.json();
+      if(!data.data.length){grid.innerHTML='<div class="gif-loading">Aucun GIF trouvé</div>';return;}
+      grid.innerHTML=data.data.map(g=>`<div class="gif-thumb" onclick="sendGif('${g.images.fixed_height.url}')"><img src="${g.images.fixed_height_small.url}" loading="lazy"></div>`).join('');
+    }catch(e){grid.innerHTML='<div class="gif-loading">Erreur de chargement</div>';}
+  },500);
+};
+window.sendGif=async(url)=>{
+  if(!currentConvId)return;
+  document.getElementById('gifPicker').classList.remove('open');
+  await addDoc(collection(db,'conversations',currentConvId,'messages'),{from:cu,url,type:'gif',createdAt:serverTimestamp()});
+  await updateDoc(doc(db,'conversations',currentConvId),{lastMsg:'[GIF]'});
+};
+
+/* NEW CHAT */
+window.openNewChat=()=>{grpSelectedMembers=[];document.getElementById('newChatScreen').classList.add('open');};
+window.closeNewChat=()=>{document.getElementById('newChatScreen').classList.remove('open');document.getElementById('dmSearch').value='';document.getElementById('userSearchResults').innerHTML='';document.getElementById('grpName').value='';document.getElementById('grpSearch').value='';document.getElementById('grpSearchResults').innerHTML='';document.getElementById('grpSelectedMembers').innerHTML='';grpSelectedMembers=[];};
+window.switchNewChatTab=(tab,el)=>{
+  document.querySelectorAll('#newChatScreen .atab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+  document.getElementById('ncDmPanel').style.display=tab==='dm'?'block':'none';
+  document.getElementById('ncGrpPanel').style.display=tab==='group'?'block':'none';
+};
+
+window.searchUsers=()=>{
+  const q=document.getElementById('dmSearch').value.toLowerCase().trim();
+  const res=document.getElementById('userSearchResults');
+  if(!q){res.innerHTML='';return;}
+  const found=accounts.filter(a=>a.id!==cu&&(a.id.toLowerCase().includes(q)||(a.name||'').toLowerCase().includes(q)));
+  if(!found.length){res.innerHTML='<div style="font-size:13px;color:var(--muted);padding:.5rem">Aucun utilisateur trouvé</div>';return;}
+  res.innerHTML=found.map(a=>`<div class="chat-item" style="border-radius:8px;margin-bottom:4px" onclick="sendFriendReq('${a.id}')">
+    <div class="chat-item-avatar">${a.avatar||'🎬'}</div>
+    <div class="chat-item-info"><div class="chat-item-name">${esc(a.name||a.id)}</div><div class="chat-item-preview">Envoyer une demande d'ami</div></div>
+  </div>`).join('');
+};
+
+window.sendFriendReq=async(toId)=>{
+  const cid=getConvId(cu,toId);
+  const existing=await getDoc(doc(db,'conversations',cid));
+  if(existing.exists()){showToast('Conversation déjà existante');closeNewChat();openConv(cid);return;}
+  await setDoc(doc(db,'conversations',cid),{type:'dm',u1:cu,u2:toId,status:'pending',createdAt:Date.now(),lastMsg:''});
+  showToast('Demande envoyée !','success');closeNewChat();
+};
+
+window.searchGroupUsers=()=>{
+  const q=document.getElementById('grpSearch').value.toLowerCase().trim();
+  const res=document.getElementById('grpSearchResults');
+  if(!q){res.innerHTML='';return;}
+  const found=accounts.filter(a=>a.id!==cu&&!grpSelectedMembers.includes(a.id)&&(a.id.toLowerCase().includes(q)||(a.name||'').toLowerCase().includes(q)));
+  res.innerHTML=found.map(a=>`<div class="chat-item" style="border-radius:8px;margin-bottom:4px" onclick="addToGroup('${a.id}')">
+    <div class="chat-item-avatar">${a.avatar||'🎬'}</div>
+    <div class="chat-item-info"><div class="chat-item-name">${esc(a.name||a.id)}</div><div class="chat-item-preview">Ajouter au groupe</div></div>
+  </div>`).join('');
+};
+
+window.addToGroup=(uid)=>{
+  if(grpSelectedMembers.includes(uid))return;
+  grpSelectedMembers.push(uid);
+  document.getElementById('grpSearch').value='';
+  document.getElementById('grpSearchResults').innerHTML='';
+  renderSelectedMembers();
+};
+function renderSelectedMembers(){
+  document.getElementById('grpSelectedMembers').innerHTML=grpSelectedMembers.map(uid=>{
+    const a=accounts.find(x=>x.id===uid);
+    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:12px;display:flex;align-items:center;gap:5px">${a?.avatar||'🎬'} ${esc(a?.name||uid)} <span style="cursor:pointer;color:var(--muted)" onclick="removeFromGroup('${uid}')">✕</span></div>`;
+  }).join('');
+}
+window.removeFromGroup=(uid)=>{grpSelectedMembers=grpSelectedMembers.filter(m=>m!==uid);renderSelectedMembers();};
+
+window.createGroup=async()=>{
+  const name=document.getElementById('grpName').value.trim();
+  if(!name){alert('Nom obligatoire');return;}
+  if(grpSelectedMembers.length<1){alert('Ajoute au moins 1 membre');return;}
+  const members=[cu,...grpSelectedMembers];
+  const ref=await addDoc(collection(db,'conversations'),{type:'group',name,members,createdBy:cu,createdAt:Date.now(),lastMsg:''});
+  showToast('Groupe créé !','success');closeNewChat();openConv(ref.id);
+};
+
+/* GROUP SETTINGS */
+window.openGrpSettings=async()=>{
+  if(!currentConvData)return;
+  const c=currentConvData;
+  document.getElementById('grpSettingsTitle').textContent=c.name;
+  const isOwner=c.createdBy===cu,isAdmin=cr==='admin';
+  document.getElementById('grpMembersList').innerHTML='<div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem">Membres</div>'+
+    (c.members||[]).map(uid=>{
+      const a=accounts.find(x=>x.id===uid);
+      const isOwnerTag=uid===c.createdBy?`<span style="font-size:10px;color:var(--accent)"> (créateur)</span>`:'';
+      const canKick=(isOwner||isAdmin)&&uid!==cu;
+      return `<div class="req-item"><div class="req-avatar">${a?.avatar||'🎬'}</div><div class="req-info"><div class="req-name">${esc(a?.name||uid)}${isOwnerTag}</div></div>${canKick?`<button class="btn-danger" onclick="kickMember('${uid}')">Expulser</button>`:''}</div>`;
+    }).join('');
+  document.getElementById('grpSettingsScreen').classList.add('open');
+};
+window.closeGrpSettings=()=>document.getElementById('grpSettingsScreen').classList.remove('open');
+
+window.kickMember=async(uid)=>{
+  if(!confirm('Expulser ce membre ?'))return;
+  const newMembers=currentConvData.members.filter(m=>m!==uid);
+  await updateDoc(doc(db,'conversations',currentConvId),{members:newMembers});
+  currentConvData.members=newMembers;
+  document.getElementById('grpMembersList').innerHTML='';
+  openGrpSettings();
+  showToast('Membre expulsé');
+};
+window.leaveOrDeleteGroup=async()=>{
+  const isOwner=currentConvData.createdBy===cu,isAdmin=cr==='admin';
+  if(isOwner||isAdmin){if(!confirm('Supprimer le groupe définitivement ?'))return;await deleteDoc(doc(db,'conversations',currentConvId));closeGrpSettings();currentConvId=null;document.getElementById('chatMain').innerHTML='<div class="chat-no-select"><div class="chat-no-select-icon">💬</div><div>Sélectionne une conversation</div></div>';showToast('Groupe supprimé');}
+  else{const nm=currentConvData.members.filter(m=>m!==cu);await updateDoc(doc(db,'conversations',currentConvId),{members:nm});closeGrpSettings();currentConvId=null;document.getElementById('chatMain').innerHTML='<div class="chat-no-select"><div class="chat-no-select-icon">💬</div><div>Sélectionne une conversation</div></div>';showToast('Vous avez quitté le groupe');}
+};
+
+window.searchAddMember=()=>{
+  const q=document.getElementById('grpAddSearch').value.toLowerCase().trim();
+  const res=document.getElementById('grpAddResults');
+  if(!q){res.innerHTML='';return;}
+  const found=accounts.filter(a=>!currentConvData.members.includes(a.id)&&(a.id.toLowerCase().includes(q)||(a.name||'').toLowerCase().includes(q)));
+  res.innerHTML=found.map(a=>`<div class="chat-item" style="border-radius:8px;margin-bottom:4px" onclick="addMemberToGroup('${a.id}')"><div class="chat-item-avatar">${a.avatar||'🎬'}</div><div class="chat-item-info"><div class="chat-item-name">${esc(a.name||a.id)}</div></div></div>`).join('');
+};
+window.addMemberToGroup=async(uid)=>{
+  const newM=[...currentConvData.members,uid];
+  await updateDoc(doc(db,'conversations',currentConvId),{members:newM});
+  currentConvData.members=newM;
+  document.getElementById('grpAddSearch').value='';
+  document.getElementById('grpAddResults').innerHTML='';
+  openGrpSettings();showToast('Membre ajouté !','success');
+};
+
+/* ADMIN CHAT VIEWER */
+async function loadAdminChats(){
+  const snap=await getDocs(collection(db,'conversations'));
+  const convs=snap.docs.map(d=>({id:d.id,...d.data()}));
+  const el=document.getElementById('adminChatList');
+  if(!convs.length){el.innerHTML='<div style="font-size:13px;color:var(--muted)">Aucune conversation</div>';return;}
+  el.innerHTML=convs.map(c=>{
+    let name;
+    if(c.type==='group')name='👥 '+c.name;
+    else{const u1=accounts.find(a=>a.id===c.u1),u2=accounts.find(a=>a.id===c.u2);name=`${u1?.name||c.u1} ↔ ${u2?.name||c.u2}`;}
+    return `<div class="security-card" style="cursor:pointer" onclick="adminViewConv('${c.id}','${esc(name)}')"><h3>${esc(name)}</h3><p style="margin-bottom:0">${c.type==='group'?c.members?.length+' membres':'Message privé'} · ${c.status==='pending'?'En attente':'Actif'}</p></div>`;
+  }).join('');
+}
+
+window.adminViewConv=async(cid,name)=>{
+  const snap=await getDocs(query(collection(db,'conversations',cid,'messages'),orderBy('createdAt','asc')));
+  const msgs=snap.docs.map(d=>({id:d.id,...d.data()}));
+  const el=document.getElementById('adminChatList');
+  el.innerHTML=`<button class="back-btn" onclick="loadAdminChats()" style="margin-bottom:.8rem">← Retour</button>
+  <div style="font-size:14px;font-weight:500;margin-bottom:1rem">${esc(name)}</div>`+
+  (msgs.length?msgs.map(m=>{
+    const sender=accounts.find(a=>a.id===m.from);
+    return `<div style="background:var(--bg3);border-radius:8px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:start;gap:1rem">
+      <div><span style="font-size:11px;color:var(--accent)">${esc(sender?.name||m.from)}</span> <span style="font-size:11px;color:var(--muted)">${formatTime(m.createdAt)}</span><br>
+      ${m.type==='gif'?`<img src="${esc(m.url)}" style="max-height:80px;border-radius:6px;margin-top:4px">`:`<span style="font-size:13px">${esc(m.text)}</span>`}</div>
+      <button class="btn-danger" onclick="adminDelMsg('${cid}','${m.id}')">✕</button>
+    </div>`;
+  }).join(''):'<div style="font-size:13px;color:var(--muted)">Aucun message</div>');
+};
+
+window.adminDelMsg=async(cid,mid)=>{
+  if(!confirm('Supprimer ce message ?'))return;
+  await deleteDoc(doc(db,'conversations',cid,'messages',mid));
+  showToast('Message supprimé');
+};
+
+/* ADMIN PANEL */
+window.openAdminPanel=async()=>{
+  await loadAll();renderAccountsTable();renderVipTable();renderScheduledList();
+  document.getElementById('maintenanceToggle').checked=!!settings.maintenance;
+  document.getElementById('maintenanceLabel').textContent=settings.maintenance?'Site fermé':'Site ouvert';
+  document.getElementById('limitToggle').checked=!!settings.limitEnabled;
+  document.getElementById('maxConn').value=settings.maxConn||5;
+  document.getElementById('adsToggle').checked=!!settings.adsEnabled;
+  document.getElementById('adsLabel').textContent=settings.adsEnabled?'Pubs activées':'Pubs désactivées';
+  document.getElementById('adImageUrl').value=settings.adImage||'';
+  document.getElementById('adLinkUrl').value=settings.adLink||'';
+  document.getElementById('adText').value=settings.adText||'';
+  document.getElementById('schedLib').innerHTML=libs.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
+  document.getElementById('adminPanel').classList.add('open');
+};
+window.closeAdminPanel=()=>document.getElementById('adminPanel').classList.remove('open');
+window.switchTab=(id,el)=>{document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.atab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');if(id==='tabChats')loadAdminChats();};
+
+function renderAccountsTable(){
+  document.getElementById('accountsTable').innerHTML=`<tr><th>ID</th><th>Prénom</th><th>Rôle</th><th>Statut</th><th>Actions</th></tr>`+
+  accounts.map(a=>`<tr><td style="font-weight:500">${esc(a.id)}</td><td>${esc(a.name||'—')}</td><td><span class="status-badge ${a.role==='admin'?'s-admin':'s-viewer'}">${a.role==='admin'?'Admin':'Spec.'}</span></td><td><span class="status-badge ${a.blocked?'s-blocked':'s-active'}">${a.blocked?'Bloqué':'Actif'}</span></td>
+  <td style="display:flex;gap:4px">${a.id!==cu?`<button class="btn-danger" onclick="toggleBlock('${a.id}',${!a.blocked})">${a.blocked?'Déblo.':'Bloquer'}</button><button class="btn-danger" onclick="deleteAccount('${a.id}')">Suppr.</button>`:'<span style="font-size:11px;color:var(--muted)">Vous</span>'}</td></tr>`).join('');
+}
+function renderVipTable(){
+  document.getElementById('vipTable').innerHTML=`<tr><th>ID</th><th>Prénom</th><th>VIP</th><th>Action</th></tr>`+
+  accounts.filter(a=>a.role!=='admin').map(a=>`<tr><td style="font-weight:500">${esc(a.id)}</td><td>${esc(a.name||'—')}</td><td>${a.vip?`<span class="status-badge s-vip">⭐ VIP</span>`:`<span class="status-badge s-viewer">Standard</span>`}</td>
+  <td><button class="${a.vip?'btn-danger':'btn-nav'}" style="${a.vip?'':'font-size:12px;padding:5px 10px'}" onclick="toggleVip('${a.id}',${!a.vip})">${a.vip?'Retirer':'⭐ VIP'}</button></td></tr>`).join('');
+}
+window.toggleVip=async(uid,vip)=>{await updateDoc(doc(db,'accounts',uid),{vip});await loadAll();renderVipTable();showToast(vip?'⭐ VIP activé !':'VIP retiré','vip');};
+window.openCreateAccount=()=>{document.getElementById('adminPanel').classList.remove('open');document.getElementById('createAccScreen').classList.add('open');};
+window.closeCreateAccount=()=>{document.getElementById('createAccScreen').classList.remove('open');['newUser','newPass','newName'].forEach(id=>document.getElementById(id).value='');document.getElementById('adminPanel').classList.add('open');};
+window.createAccount=async()=>{
+  const u=document.getElementById('newUser').value.trim(),p=document.getElementById('newPass').value.trim(),r=document.getElementById('newRole').value,n=document.getElementById('newName').value.trim(),vip=document.getElementById('newVip').checked;
+  if(!u||!p){alert('Identifiant et mot de passe obligatoires.');return;}
+  if(accounts.find(a=>a.id===u)){alert('Identifiant déjà utilisé.');return;}
+  await setDoc(doc(db,'accounts',u),{pass:p,role:r,name:n||u,avatar:'🎬',blocked:false,vip,createdAt:Date.now()});
+  await loadAll();closeCreateAccount();renderAccountsTable();renderVipTable();showToast('Compte créé !','success');
+};
+window.toggleBlock=async(uid,block)=>{await updateDoc(doc(db,'accounts',uid),{blocked:block});await loadAll();renderAccountsTable();showToast(block?'Bloqué':'Débloqué');};
+window.deleteAccount=async(uid)=>{if(!confirm('Supprimer ce compte ?'))return;await deleteDoc(doc(db,'accounts',uid));await loadAll();renderAccountsTable();renderVipTable();showToast('Supprimé');};
+
+window.toggleAds=async()=>{const on=document.getElementById('adsToggle').checked;document.getElementById('adsLabel').textContent=on?'Pubs activées':'Pubs désactivées';settings.adsEnabled=on;await setDoc(doc(db,'settings','main'),settings);showToast(on?'Pubs activées':'Pubs désactivées');};
+window.saveAdSettings=async()=>{settings.adImage=document.getElementById('adImageUrl').value.trim();settings.adLink=document.getElementById('adLinkUrl').value.trim();settings.adText=document.getElementById('adText').value.trim();await setDoc(doc(db,'settings','main'),settings);showToast('Pub sauvegardée !','success');};
+window.toggleMaintenance=async()=>{const on=document.getElementById('maintenanceToggle').checked;document.getElementById('maintenanceLabel').textContent=on?'Site fermé':'Site ouvert';settings.maintenance=on;await setDoc(doc(db,'settings','main'),settings);showToast(on?'Site fermé !':'Rouvert !',on?'error':'success');};
+window.toggleLimit=async()=>{const on=document.getElementById('limitToggle').checked;settings.limitEnabled=on;await setDoc(doc(db,'settings','main'),settings);showToast(on?'Limite activée':'Désactivée');};
+window.saveLimit=async()=>{settings.maxConn=parseInt(document.getElementById('maxConn').value)||5;await setDoc(doc(db,'settings','main'),settings);};
+
+window.saveScheduled=async()=>{
+  const lid=document.getElementById('schedLib').value,t=document.getElementById('schedTitle').value.trim(),v=document.getElementById('schedVideo').value.trim(),d=document.getElementById('schedDate').value;
+  if(!t||!v||!lid||!d){alert('Remplis tous les champs.');return;}
+  await addDoc(collection(db,'scheduled'),{libId:lid,title:t,video:v,num:document.getElementById('schedNum').value.trim(),image:document.getElementById('schedImage').value.trim(),dur:document.getElementById('schedDur').value.trim(),vipOnly:document.getElementById('schedVip').checked,publishAt:new Date(d).getTime(),vtype:'file',createdAt:Date.now()});
+  await loadAll();renderScheduledList();['schedTitle','schedNum','schedVideo','schedImage','schedDur'].forEach(id=>document.getElementById(id).value='');showToast('Programmé !','success');
+};
+function renderScheduledList(){
+  const el=document.getElementById('scheduledList');
+  if(!scheduled.length){el.innerHTML='<div style="font-size:13px;color:var(--muted)">Aucun épisode programmé.</div>';return;}
+  el.innerHTML=scheduled.map(s=>{const lib=libs.find(l=>l.id===s.libId);return `<div style="background:var(--bg3);border-radius:8px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:1rem"><div><div style="font-size:13px;font-weight:500">${esc(s.title)}</div><div style="font-size:11px;color:var(--muted)">${lib?esc(lib.name):''} · ${new Date(s.publishAt).toLocaleString('fr-FR')}</div></div><button class="btn-del" onclick="delScheduled('${s.id}')">Annuler</button></div>`;}).join('');
+}
+window.delScheduled=async(id)=>{await deleteDoc(doc(db,'scheduled',id));await loadAll();renderScheduledList();};
+async function checkScheduled(){const now=Date.now();const tp=scheduled.filter(s=>s.publishAt<=now);for(const s of tp){await addDoc(collection(db,'eps'),{libId:s.libId,title:s.title,video:s.video,vtype:s.vtype||'file',num:s.num||'',image:s.image||'',dur:s.dur||'',vipOnly:s.vipOnly||false,date:new Date(s.publishAt).toISOString().split('T')[0],createdAt:s.publishAt});await deleteDoc(doc(db,'scheduled',s.id));}if(tp.length>0){await loadAll();renderAll();}}
+
+/* ADD LIB/EP */
+window.openAddLib=()=>document.getElementById('addLibScreen').classList.add('open');
+window.closeAddLib=()=>{document.getElementById('addLibScreen').classList.remove('open');['lName','lCreator','lDesc','lImage','lTrailer','lCategory'].forEach(id=>document.getElementById(id).value='');document.getElementById('lVip').checked=false;};
+window.saveLib=async()=>{const n=document.getElementById('lName').value.trim();if(!n){alert('Nom obligatoire');return;}await addDoc(collection(db,'libs'),{name:n,creator:document.getElementById('lCreator').value.trim(),description:document.getElementById('lDesc').value.trim(),image:document.getElementById('lImage').value.trim(),trailer:document.getElementById('lTrailer').value.trim(),category:document.getElementById('lCategory').value.trim(),vipOnly:document.getElementById('lVip').checked,createdAt:Date.now()});await loadAll();closeAddLib();renderAll();showToast('Bibliothèque créée !','success');};
+window.openAddEp=()=>{document.getElementById('epLib').innerHTML=libs.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');if(curLib)document.getElementById('epLib').value=curLib;document.getElementById('epDate').value=new Date().toISOString().split('T')[0];document.getElementById('addEpScreen').classList.add('open');};
+window.closeAddEp=()=>{document.getElementById('addEpScreen').classList.remove('open');['epTitle','epNum','epDesc','epVideo','epImage','epSubs','epDur'].forEach(id=>document.getElementById(id).value='');document.getElementById('epVtype').value='file';document.getElementById('epQuality').value='';document.getElementById('epVip').checked=false;updateVfields();};
+window.updateVfields=()=>{const t=document.getElementById('epVtype').value;document.getElementById('epVideo').placeholder=t==='youtube'?'https://www.youtube.com/watch?v=...':'https://archive.org/download/...';document.getElementById('epVlabel').textContent=t==='youtube'?'Lien YouTube *':'URL de la vidéo *';};
+window.saveEp=async()=>{const t=document.getElementById('epTitle').value.trim(),v=document.getElementById('epVideo').value.trim(),lid=document.getElementById('epLib').value;if(!t||!v||!lid){alert('Titre et vidéo obligatoires');return;}await addDoc(collection(db,'eps'),{libId:lid,title:t,video:v,vtype:document.getElementById('epVtype').value,num:document.getElementById('epNum').value.trim(),description:document.getElementById('epDesc').value.trim(),image:document.getElementById('epImage').value.trim(),subs:document.getElementById('epSubs').value.trim(),quality:document.getElementById('epQuality').value,dur:document.getElementById('epDur').value.trim(),date:document.getElementById('epDate').value,vipOnly:document.getElementById('epVip').checked,createdAt:Date.now()});await loadAll();closeAddEp();renderAll();if(curLib)renderEps(curLib);showToast('Épisode publié !','success');};
+
+/* PROFILE */
 window.openProfile=()=>{
-  const acc=accounts.find(a=>a.id===currentUser)||{};
-  selectedAvatar=acc.avatar||'🎬';
-  document.getElementById('profileNameInput').value=acc.name||currentUser;
-  document.getElementById('profileAvatar').textContent=selectedAvatar;
-  const grid=document.getElementById('avatarGrid');
-  grid.innerHTML=AVATARS.map(a=>`<div class="avatar-opt ${a===selectedAvatar?'selected':''}" onclick="selectAvatar('${a}')">${a}</div>`).join('');
+  const acc=accounts.find(a=>a.id===cu)||{};
+  selAvatar=acc.avatar||'🎬';
+  document.getElementById('profileAvatar').textContent=selAvatar;
+  document.getElementById('profileNameDisplay').textContent=acc.name||cu;
+  document.getElementById('profileRoleDisplay').textContent=cr==='admin'?'Administrateur':'Spectateur';
+  document.getElementById('profileVipInfo').innerHTML=cvip?`<div class="profile-vip-info">⭐ Accès VIP — Sans pub, contenus exclusifs</div>`:'';
+  document.getElementById('profileNameInput').value=acc.name||cu;
+  document.getElementById('avatarGrid').innerHTML=AVATARS.map(a=>`<div class="avatar-opt ${a===selAvatar?'selected':''}" onclick="selectAvatar('${a}')">${a}</div>`).join('');
+  document.getElementById('avatarGrid').style.display='none';
   document.getElementById('profileScreen').classList.add('open');
 };
-window.toggleAvatarPicker=()=>{
-  const g=document.getElementById('avatarGrid');
-  g.style.display=g.style.display==='none'?'grid':'none';
-};
-window.selectAvatar=(a)=>{
-  selectedAvatar=a;
-  document.getElementById('profileAvatar').textContent=a;
-  document.querySelectorAll('.avatar-opt').forEach(el=>el.classList.remove('selected'));
-  event.target.classList.add('selected');
-};
+window.toggleAvatarPicker=()=>{const g=document.getElementById('avatarGrid');g.style.display=g.style.display==='none'?'grid':'none';};
+window.selectAvatar=(a)=>{selAvatar=a;document.getElementById('profileAvatar').textContent=a;document.querySelectorAll('.avatar-opt').forEach(el=>el.classList.remove('selected'));event.target.classList.add('selected');};
 window.saveProfile=async()=>{
-  const name=document.getElementById('profileNameInput').value.trim()||currentUser;
-  await updateDoc(doc(db,'accounts',currentUser),{name,avatar:selectedAvatar});
+  const n=document.getElementById('profileNameInput').value.trim()||cu;
+  await updateDoc(doc(db,'accounts',cu),{name:n,avatar:selAvatar});
   await loadAll();
-  document.getElementById('userBadge').textContent=selectedAvatar+' '+name;
+  document.getElementById('navAvatar').textContent=selAvatar;
+  document.getElementById('navName').textContent=n;
+  document.getElementById('profileAvatar').textContent=selAvatar;
+  document.getElementById('profileNameDisplay').textContent=n;
   document.getElementById('profileScreen').classList.remove('open');
   showToast('Profil mis à jour !','success');
 };
 
-/* ── TOAST ── */
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className='toast '+(type||'');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-/* ── UTILS ── */
+/* TOAST */
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-// Expose needed globals
-window.renderAll=renderAll;
 
 boot();
 </script>
